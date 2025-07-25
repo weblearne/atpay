@@ -215,7 +215,7 @@
           <li><a href="#">Developers</a></li>
           <li><a href="#">Pricing</a></li>
      <a href="login/index.php" class="login-btn">Log In</a>
-          <li><a href="#" class="login-btn">Register Free</a></li>
+          <li><a href="register/index.php" class="login-btn">Register Free</a></li>
         </ul>
       </nav>
     </div>
