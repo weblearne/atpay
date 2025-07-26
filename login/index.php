@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="login_style.css">
 </head>
 <body>
-
     <div class="login-container">
         <!-- Left Side - Image Section -->
         <div class="image-section">

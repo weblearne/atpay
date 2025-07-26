@@ -154,7 +154,7 @@ if (isset($_GET['logout'])) {
                     <i class="fas fa-shield-alt"></i> Security Settings
                 </a>
                 <a href="legal.php" class="link-item">
-                    <i class="fas fa-file-contract"></i> Legal Documentation
+                    <i class="fas fa-file-contract"></i> Legal Documentation                
                 </a>
                 <a href="about.php" class="link-item">
                     <i class="fas fa-info-circle"></i> About atPay
@@ -181,7 +181,7 @@ if (isset($_GET['logout'])) {
                 </a>
             </div>
 
-            <a href="?logout=1" class="logout-btn" onclick="return confirm('Are you sure you want to logout?')">
+            <a href="../logout.php" class="logout-btn" onclick="return confirm('Are you sure you want to logout')">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>

@@ -78,14 +78,14 @@ $bankName = "Palmpay";
     <div class="grid-4">
       <div class="grid-item" onclick="addMore()" role="button" >
      <i class="fa-solid fa-plus" ></i>
-        <div class="grid-item-title">Add More</div>
+        <div class="grid-item-title">Add Money</div>
       </div>
       <div class="grid-item" onclick="sendGift()" role="button">
         <i class="fas fa-gift"></i>
         <div class="grid-item-title">Send Gift</div>
       </div>
       <div class="grid-item" onclick="upgrade()" role="button">
-    <i class="fa-regular fa-arrow-up"></i>
+   <i class="fa-solid fa-arrow-up"></i>
         <div class="grid-item-title">Upgrade</div>
       </div>
       <div class="grid-item" onclick="invite()" role="button">
@@ -198,19 +198,19 @@ $bankName = "Palmpay";
 
         // Other Actions Functions
         function addMore() {
-            alert('Add more funds to your account...');
+            window.location.href="add_money.php";
         }
 
         function sendGift() {
-            alert('Send gift to friends...');
+          window.location.href = '../include/coming_soon.php';
         }
 
         function upgrade() {
-            alert('Upgrade your account...');
+            window.location.href = '../include/coming_soon.php';
         }
 
         function invite() {
-            alert('Invite friends to join...');
+           window.location.href = '../include/coming_soon.php';
         }
 
         // Quick Access Functions
