@@ -1,7 +1,35 @@
-
 <?php
-  include '../include/home_top_nav_bar.php';
+// session_start();
+
+// // Check if user is logged in
+// if (!isset($_SESSION['user_id'])) {
+//     header('Location: ../index.php');
+//     exit();
+// }
+// Set the correct credentials
+$correctPhone = "000";
+$correctPassword = "1234";
+
+// Check if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get user input safely
+    $phone = trim($_POST['phone'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+
+    // Validate inputs
+    if (empty($phone) || empty($password)) {
+        $error = "Phone number and password are required!";
+    } elseif ($phone === $correctPhone && $password === $correctPassword) {
+        // Successful login
+        $_SESSION['user'] = $phone;
+        header("Location: ../user/index.php");
+        exit;
+    } else {
+        $error = "Invalid phone number or password!";
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +40,6 @@
     <link rel="stylesheet" href="login_style.css">
 </head>
 <body>
- 
 
     <div class="login-container">
         <!-- Left Side - Image Section -->
@@ -51,25 +78,17 @@
 
             <h2 class="login-title">Login</h2>
 
-            <form>
+            <form method="POST" action="">
+
                 <div class="form-group">
-                    <label class="form-label">Email or Phone Number</label>
-                    <input 
-                        type="text" 
-                        class="form-input" 
-                        placeholder="Please enter your email or phone number"
-                    >
+                    <label class="form-label">Phone Number</label>
+                  <input type="text" name="phone" class="form-input" placeholder="Please enter your email or phone number">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Password</label>
                     <div class="password-wrapper">
-                        <input 
-                            type="password" 
-                            class="form-input" 
-                            placeholder="Please enter your password"
-                            id="password"
-                        >
+                      <input type="password" name="password" class="form-input" placeholder="Please enter your password" id="password">
                         <button type="button" class="password-toggle" onclick="togglePassword()">
                             👁️
                         </button>
@@ -80,12 +99,16 @@
                     <a href="#" class="forgot-link">Forgot Password?</a>
                 </div>
 
-                <button type="submit" class="login-button">Login</button>
+              <button type="submit" class="login-button">Login</button>
 
                 <div class="signup-section">
                     <span>Don't have an account?</span>
                     <a href="#" class="signup-link">Sign up</a>
                 </div>
+                <?php if (!empty($error)): ?>
+                    <div style="color: red; margin-bottom: 10px; text-align: center;"><?php echo $error; ?></div>
+                <?php endif; ?>
+
             </form>
 
             <div class="copyright">
@@ -108,11 +131,11 @@
             }
         }
 
-        // Form submission handler
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Add your login logic here
-            console.log('Login attempt');
+        // // Form submission handler
+        // document.querySelector('form').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     // Add your login logic here
+        //     console.log('Login attempt');
         });
     </script>
 </body>

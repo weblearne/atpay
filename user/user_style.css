@@ -24,113 +24,17 @@
     .banner-slider {
       display: flex;
       transition: transform 0.5s ease-in-out;
+         /* border-radius: 10px; */
+    
     }
 
     .banner-slide {
       min-width: 100%;
       transition: opacity 0.5s ease-in-out;
+        /* border-radius: 10px; */
     }
 
-        /* Top Navigation */
-        .top-nav {
-            background: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-icon {
-            background: none;
-            border: none;
-            color: var(--secondary-color);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: background-color 0.3s;
-            position: relative;
-        }
-
-        .nav-icon:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .balance-btn {
-            background: var(--secondary-color);
-            border: none;
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s;
-            float: left;
-        }
-
-        .balance-btn:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Account Numbers Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: var(--secondary-color);
-            margin: 15% auto;
-            padding: 2rem;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .account-item {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            background: #f9fafb;
-        }
+       
 
         /* Main Content */
         .main-content {
@@ -179,10 +83,23 @@
         /* Grid Layouts */
         .grid-4 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* Default for small screens */
             gap: 1rem;
             margin-bottom: 2rem;
         }
+
+        @media (min-width: 768px) {
+            .grid-4 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+            
 
         .grid-3 {
             display: grid;
@@ -369,27 +286,4 @@
             align-items: center;
             justify-content: center;
         }
-        .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background-color: #fff;
-    border-top: 1px solid #ddd;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 10px 0;
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    font-size: 12px;
-}
-
-.nav-item i {
-    font-size: 18px;
-    margin-bottom: 4px;
-}
+      

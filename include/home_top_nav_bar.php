@@ -1,5 +1,11 @@
- <style>
-      :root {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Navbar - atPay</title>
+  <style>
+    :root {
       --primary-purple: #6366f1;
       --secondary-purple: #8b5cf6;
       --dark-purple: #4c1d95;
@@ -25,7 +31,7 @@
       padding: 0;
       box-sizing: border-box;
     }
- /* Header */
+
     header {
       background: var(--white);
       box-shadow: var(--shadow-sm);
@@ -52,15 +58,11 @@
       align-items: center;
     }
 
-    .logo::before {
-      content: '';
-      margin-right: 8px;
-      width: 24px;
-      height: 24px;
-      background: var(--dark-purple);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .logo img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 50%;
     }
 
     .hamburger {
@@ -90,122 +92,67 @@
       font-weight: 500;
       transition: var(--transition);
       padding: 0.5rem 0;
-      position: relative;
     }
 
     nav a:hover {
       color: var(--primary-purple);
     }
+
+    .login-btn {
+      background: var(--dark-purple);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .login-btn:hover {
+      background: var(--primary-purple);
+    }
+
     @media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
+      .hamburger {
+        display: block;
+      }
 
-  nav ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background: var(--white);
-    padding: 1rem;
-    box-shadow: var(--shadow-md);
-  }
+      nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 1rem;
+        box-shadow: var(--shadow-md);
+        z-index: 1000;
+      }
 
-  nav ul.active {
-    display: flex;
-  }
+      nav ul.active {
+        display: flex;
+      }
 
-  nav a {
-    width: 100%;
-    text-align: center;
-    padding: 1rem;
-  }
-}
-.login-btn {
-  background: var(--dark-purple);
-  color: var(--white);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: var(--transition);
-}
+      nav a {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+      }
 
-.login-btn:hover {
-  background: var(--primary-purple);
-  color: #ffffff;
-}
+      .login-btn {
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
 
-    @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
-
-  nav ul {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    background: var(--white);
-    width: 100%;
-    top: 100%;
-    left: 0;
-    box-shadow: var(--shadow-md);
-    z-index: 1000;
-  }
-
-  nav ul.active {
-    display: flex;
-  }
-
-  nav a {
-    padding: 1rem;
-    width: 100%;
-    text-align: center;
-  }
-}
-
-.login-btn {
-  background: var(--dark-purple);
-  color: var(--white);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: var(--transition);
-}
-
-.login-btn:hover {
-  background: var(--primary-purple);
-  color: #ffffff;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
- </style>
- 
- <header>
+  <!-- Responsive Header/Navbar -->
+  <header>
     <div>
-      
-      <div class="logo"><img src="images/logo.png" alt="" style="width:50px; height:50px;">atPay</div>
+      <div class="logo">
+        <img src="images/logo.png" alt="atPay Logo">atPay
+      </div>
       <nav>
         <div class="hamburger">☰</div>
         <ul>
@@ -214,54 +161,32 @@
           <li><a href="#">Company</a></li>
           <li><a href="#">Developers</a></li>
           <li><a href="#">Pricing</a></li>
-     <a href="login/index.php" class="login-btn">Log In</a>
+          <li><a href="login/index.php" class="login-btn">Log In</a></li>
           <li><a href="register/index.php" class="login-btn">Register Free</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  
   <script>
     // Toggle hamburger menu
     document.querySelector('.hamburger').addEventListener('click', () => {
       document.querySelector('nav ul').classList.toggle('active');
     });
 
-    // Add smooth scrolling for navigation links
+    // Optional: Smooth scroll (if using anchor links)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
-        e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth'
-          });
-          // Close menu on mobile after clicking a link
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
           if (window.innerWidth <= 768) {
             document.querySelector('nav ul').classList.remove('active');
           }
         }
       });
     });
-
-    // Add intersection observer for animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.graphic-item, .column').forEach(el => {
-      observer.observe(el);
-    });
-    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
-
   </script>
+</body>
+</html>
