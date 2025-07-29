@@ -198,7 +198,7 @@ $bankName = "Palmpay";
 
         // Other Actions Functions
         function addMore() {
-            window.location.href="add_money.php";
+            window.location.href="../list/addmoney/";
         }
 
         function sendGift() {
@@ -230,15 +230,15 @@ $bankName = "Palmpay";
 
         // Bill Payment Functions
         function payElectricity() {
-            alert('Pay electricity bills...');
+            window.location.href = '../list/electricity/';
         }
 
         function payCable() {
-            alert('Pay cable TV bills...');
+           window.location.href = '../list/cabletv/';
         }
 
         function buyData() {
-            alert('Buy data bundle...');
+          window.location.href = '../list/buydata/buy_data1.php';
         }
 
         function buyAirtime() {

@@ -30,7 +30,7 @@
     
     <!-- Bottom Navigation -->
 <nav class="bottom-nav">
-  <a href="../user/index.php" class="nav-item active">
+  <a href="../../user/" class="nav-item active">
     <i class="fas fa-house"></i>
     <span>Home</span>
   </a>
@@ -46,7 +46,7 @@
     <i class="fas fa-clock-rotate-left"></i>
     <span>History</span>
   </a>
-  <a href="../user/profile.php" class="nav-item">
+  <a href="../user/profile/" class="nav-item">
     <i class="fas fa-user"></i>
     <span>Me</span>
   </a>

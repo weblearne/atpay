@@ -23,8 +23,8 @@ $account_name = "Web Learner";
         <!-- Top Navigation -->
         <nav class="navbar">
             <div class="nav-left" >
-                <a href="index.php" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
+                <a href="../../user/" onclick="goBack()" class="back-btn">
+                    <i class="fas fa-arrow-left" onclick="goBack()"></i>
                 </a>
                 <div class="nav-title" onclick="goBack()">Back</div>
             </div>
@@ -35,7 +35,7 @@ $account_name = "Web Learner";
             <!-- Wallet Header -->
             <div class="wallet-header">
                 <div class="logo">
-                <img src="../images/logo.png" style="width:100px; height:100px; border-radius:50px;" alt="">
+                <img src="../../images/logo.png" style="width:100px; height:100px; border-radius:50px;" alt="">
                 <span style="font-size:30px;">Wallet</span>
             </div>
             </div>

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($phone === $correctPhone && $password === $correctPassword) {
         // Successful login
         $_SESSION['user'] = $phone;
-        header("Location: ../user/index.php");
+        header("Location: ../user/");
         exit;
     } else {
         $error = "Invalid phone number or password!";

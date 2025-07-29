@@ -75,7 +75,7 @@ if (isset($_GET['logout'])) {
     <div class="container">
         <header class="header">
             <div class="logo">
-                <img src="../images/logo.png" style="width:50px; height:50px;" alt="">
+                <img src="../../images/logo.png" style="width:50px; height:50px;" alt="">
                 <span>Profile</span>
             </div>
             <div class="header-actions">
@@ -186,9 +186,9 @@ if (isset($_GET['logout'])) {
             </a>
         </div>
     </div>
-
+<br>
                     <footer>
-                         <?php include '../include/footer.php'?>
+                         <?php include '../../include/footer.php'?>
 
                     </footer>
     <script>

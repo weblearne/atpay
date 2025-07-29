@@ -630,7 +630,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
         </div>
     </div>
 
-    <script>
+    <script>SS
         // Countdown Timer
         function updateCountdown() {
             const launchDate = new Date('<?php echo $launch_date; ?>').getTime();
