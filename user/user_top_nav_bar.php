@@ -107,8 +107,9 @@
 <nav class="top-nav" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem;">
   <!-- Left: Logo and Balance -->
   <div class="logo-balance" style="display: flex; align-items: center; gap: 1rem;">
-    <div class="logo">
-      <img src="../images/logo.png" style="width: 50px; height: 50px; border-radius: 50%;" alt="Logo">
+    <div class="logo" >
+      <a href="profile2/">  <img src="../images/logo.png" style="width: 50px; height: 50px; border-radius: 50%;" alt="Logo" ></a>
+    
     </div>
     <button class="balance-btn" onclick="toggleBalanceModal()">
       Balance: ₦ <?php echo $balance; ?>
