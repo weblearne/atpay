@@ -181,7 +181,7 @@ if (isset($_GET['logout'])) {
                 </a>
             </div>
 
-            <a href="../logout.php" class="logout-btn" onclick="return confirm('Are you sure you want to logout')">
+            <a href="../../logout.php" class="logout-btn" onclick="return confirm('Are you sure you want to logout')">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>

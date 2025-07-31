@@ -21,14 +21,7 @@ $account_name = "Web Learner";
 <body>
     <div class="main-container">
         <!-- Top Navigation -->
-        <nav class="navbar">
-            <div class="nav-left" >
-                <a href="../../user/" onclick="goBack()" class="back-btn">
-                    <i class="fas fa-arrow-left" onclick="goBack()"></i>
-                </a>
-                <div class="nav-title" onclick="goBack()">Back</div>
-            </div>
-        </nav>
+       <?php include '../../include/user_top_navbar.php';?>
 
         <!-- Content Wrapper -->
         <div class="content-wrapper">

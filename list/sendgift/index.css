@@ -1,0 +1,271 @@
+     :root {
+            --primary-color: #4c1d95;
+            --secondary-color: #ffffff;
+            --accent-color: #6366f1;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --hover-bg: #f3f4f6;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .history-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .history-btn:hover {
+            background-color: var(--hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Input Section */
+        .input-section {
+            background-color: var(--secondary-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .input-fieldset {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .input-legend {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 0 0.5rem;
+            background-color: var(--secondary-color);
+        }
+
+        .input-field {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            background-color: transparent;
+        }
+
+        .input-field::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Send Button */
+        .send-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .send-btn:hover {
+            background-color: #3730a3;
+            transform: translateY(-1px);
+        }
+
+        .send-btn:disabled {
+            background-color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Confirmation Popup */
+        .popup {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--secondary-color);
+            box-shadow: var(--shadow);
+            border-radius: 0.5rem 0.5rem 0 0;
+            padding: 1.5rem;
+            z-index: 1000;
+            transition: bottom 0.3s ease-in-out;
+        }
+
+        .popup.active {
+            bottom: 0;
+        }
+
+        .popup-content {
+            text-align: center;
+        }
+
+        .popup-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .popup-content p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .confirm-btn, .cancel-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .confirm-btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+        }
+
+        .confirm-btn:hover {
+            background-color: #059669;
+        }
+
+        .cancel-btn {
+            background-color: var(--error-color);
+            color: white;
+            border: none;
+        }
+
+        .cancel-btn:hover {
+            background-color: #dc2626;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .alert-error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.75rem;
+            }
+
+            .input-section {
+                padding: 1rem;
+            }
+
+            .top-nav {
+                padding: 0.75rem;
+            }
+
+            .page-title {
+                font-size: 1.125rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .popup-content h3 {
+                font-size: 1rem;
+            }
+
+            .popup-content p {
+                font-size: 0.75rem;
+            }
+        }

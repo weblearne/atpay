@@ -29,9 +29,9 @@ Making Everyday Transactions Effortless, Anywhere, Anytime!</p>
     <h2>Do more with your money</h2>
     <p>More than just transferring money. You can do all kinds of cool stuff - pay your bills, make purchases, save and earn, all financial needs in one atPay app.</p>
     <div class="do-more-graphics">
+      <div class="graphic-item"><img src="images/mtn.png" alt=""></div>
       <div class="graphic-item"><img src="images/img3.jpg" alt=""></div>
-      <div class="graphic-item"><img src="images/img3.jpg" alt=""></div>
-      <div class="graphic-item"><img src="images/img3.jpg" alt=""></div>
+      <div class="graphic-item"><img src="images/airtel.jpg" alt=""></div>
 
      
     </div>
@@ -91,10 +91,10 @@ Making Everyday Transactions Effortless, Anywhere, Anytime!</p>
       </div>
     </div>
     <div class="social-icons">
-      <a href="#" class="social-link"><img src="images/logo.png" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
-      <a href="#" class="social-link"><img src="images/logo.png" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
-      <a href="#" class="social-link"><img src="images/logo.png" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
-      <a href="#" class="social-link"><img src="images/logo.png" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
+      <a href="#" class="social-link"><img src="images/mtn.png" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
+      <a href="#" class="social-link"><img src="images/airtel.jpg" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
+      <a href="#" class="social-link"><img src="images/glo.jpg" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
+      <a href="#" class="social-link"><img src="images/9mobile.png" style="width:50px; height:50px; border-radius:25px;" alt=""></a>
 
     </div>
     <p class="copyright">©2025 atPay. All rights reserved.</p>

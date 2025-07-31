@@ -7,7 +7,7 @@
 //     exit();
 // }
 
-$balance = "1,000";
+$balance = "1,000,000";
 $accountNumber = "0000000000";
 $accountName = "Web Learner";
 $bankName = "Palmpay";
@@ -202,15 +202,15 @@ $bankName = "Palmpay";
         }
 
         function sendGift() {
-          window.location.href = '../include/coming_soon.php';
+          window.location.href = '../list/sendgift/';
         }
 
         function upgrade() {
-            window.location.href = '../include/coming_soon.php';
+           window.location.href = '../list/upgrade/';
         }
 
         function invite() {
-           window.location.href = '../include/coming_soon.php';
+           window.location.href = '../list/invite/';
         }
 
         // Quick Access Functions
@@ -238,11 +238,11 @@ $bankName = "Palmpay";
         }
 
         function buyData() {
-          window.location.href = '../list/buydata/buy_data1.php';
+          window.location.href = '../list/buydata/';
         }
 
         function buyAirtime() {
-            alert('Buy airtime...');
+                window.location.href = '../list/buyairtime/';
         }
 
         function buyEsim() {
