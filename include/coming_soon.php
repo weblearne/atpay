@@ -532,14 +532,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
 
     <div class="main-container">
         <!-- Top Navigation -->
-        <nav class="navbar">
-            <div class="nav-left">
-                <a href="javascript:history.back()" class="back-btn" title="Go Back">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-                <div class="nav-title">Coming Soon</div>
-            </div>
-        </nav>
+   <?php include 'user_top_navbar.php';?>
 
         <!-- Content Wrapper -->
         <div class="content-wrapper">

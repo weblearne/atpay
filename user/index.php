@@ -243,16 +243,17 @@ $bankName = "Palmpay";
         }
 
         function buyEsim() {
-            alert('Buy eSIM...');
+          window.location.href = '../include/coming_soon.php';
         }
 
         function buySmile() {
-            alert('Buy Smile data...');
+            window.location.href = '../list/smile/';
         }
 
         function buyExamPin() {
-            alert('Buy exam pin...');
+            window.location.href = '../include/coming_soon.php';
         }
+        
 
         function showMore() {
             alert('Show more services...');

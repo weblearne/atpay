@@ -30,7 +30,7 @@
     
     <!-- Bottom Navigation -->
 <nav class="bottom-nav">
-  <a href="../../user/" class="nav-item active">
+  <a href="../user/" class="nav-item active">
     <i class="fas fa-house"></i>
     <span>Home</span>
   </a>
@@ -38,15 +38,15 @@
     <i class="fas fa-gear"></i>
     <span>Services</span>
   </a>
-  <a href="#" class="nav-item">
+  <a href="../list/addmoney/" class="nav-item">
     <i class="fas fa-wallet"></i>
     <span>Wallet</span>
   </a>
-  <a href="#" class="nav-item">
+  <a href="../list/history/" class="nav-item">
     <i class="fas fa-clock-rotate-left"></i>
     <span>History</span>
   </a>
-  <a href="../user/profile/" class="nav-item">
+  <a href="../list/profile/" class="nav-item">
     <i class="fas fa-user"></i>
     <span>Me</span>
   </a>
