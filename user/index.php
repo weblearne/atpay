@@ -256,7 +256,7 @@ $bankName = "Palmpay";
         
 
         function showMore() {
-            alert('Show more services...');
+            window.location.href='../list/services/'
         }
 
         // Bottom Navigation

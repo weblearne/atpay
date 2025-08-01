@@ -241,6 +241,14 @@ function getTransactionHistory() {
         </div>
     </div>
 
+
+                        
+      <?php include '../../include/app_settings.php'; ?>
+        <footer style="text-align:center; font-size:14px; color:var(--secondary-color); background-color:var(--primary-color); padding:20px 0;">
+            <?php echo APP_NAME_FOOTER; ?>
+        </footer>
+
+        
     <script>
         const providers = <?php echo json_encode($providers); ?>;
         let selectedProvider = '';

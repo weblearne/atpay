@@ -135,6 +135,13 @@ $account_name = "Web Learner";
         <span id="toastMessage">Account number copied successfully!</span>
     </div>
 
+
+      <?php include '../../include/app_settings.php'; ?>
+<footer style="text-align:center; font-size:14px; color:var(--secondary-color); background-color:var(--primary-color); padding:20px 0;">
+    <?php echo APP_NAME_FOOTER; ?>
+</footer>
+
+
     <script>
         function goBack() {
   window.history.back();
