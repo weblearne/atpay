@@ -23,17 +23,17 @@
             box-sizing: border-box;
         }
 
-        body {
+        /* body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
             min-height: 100vh;
             padding-top: 80px;
-        }
+        } */
 
         .top-nav {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+            background:var(--primary-color);
             backdrop-filter: blur(10px);
-            color: var(--primary-color);
+            color: var(--secondary-color);
             padding: 16px 24px;
             display: flex;
             justify-content: space-between;
@@ -58,7 +58,7 @@
         }
 
         .back-btn {
-            background: linear-gradient(135deg, var(--background-color) 0%, var(--hover-color) 100%);
+            background: var(--background-color);
             border: 2px solid transparent;
             color: var(--primary-color);
             font-size: 15px;
@@ -114,13 +114,11 @@
             transform: translateX(-3px);
         }
 
-        .nav-brand {
+       .nav-brand {
             font-size: 28px;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--secondary-color); /* Explicitly set to white */
+            /* Removed -webkit-background-clip and -webkit-text-fill-color to ensure solid white */
             position: relative;
             letter-spacing: -0.5px;
         }
@@ -132,7 +130,6 @@
             left: 0;
             width: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
             border-radius: 2px;
             transition: width 0.3s ease;
         }
@@ -250,78 +247,5 @@
         <div class="nav-brand">atPay Wallet</div>
     </nav>
 
-    <script>
-        // Enhanced back button functionality
-        // document.querySelector('.back-btn').addEventListener('click', function(e) {
-        //     e.preventDefault();
-            
-        //     // Check if there's browser history
-        //     if (window.history.length > 1) {
-        //         window.history.back();
-        //     } else {
-        //         // Fallback: redirect to home page or login
-        //         console.log('No history available, redirecting to home');
-        //         // window.location.href = '/';
-        //     }
-        // });
-
-        // Add scroll effect to navbar
-        // let lastScrollTop = 0;
-        // const navbar = document.querySelector('.top-nav');
-
-        // window.addEventListener('scroll', function() {
-        //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-        //     if (scrollTop > 50) {
-        //         navbar.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(254,254,254,0.95) 100%)';
-        //         navbar.style.backdropFilter = 'blur(15px)';
-        //     } else {
-        //         navbar.style.background = 'linear-gradient(135deg, var(--secondary-color) 0%, #fefefe 100%)';
-        //         navbar.style.backdropFilter = 'blur(10px)';
-        //     }
-            
-        //     lastScrollTop = scrollTop;
-        // });
-
-        // // Add ripple effect to back button
-        // document.querySelector('.back-btn').addEventListener('click', function(e) {
-        //     const ripple = document.createElement('span');
-        //     const rect = this.getBoundingClientRect();
-        //     const size = Math.max(rect.width, rect.height);
-        //     const x = e.clientX - rect.left - size / 2;
-        //     const y = e.clientY - rect.top - size / 2;
-            
-        //     ripple.style.cssText = `
-        //         position: absolute;
-        //         width: ${size}px;
-        //         height: ${size}px;
-        //         left: ${x}px;
-        //         top: ${y}px;
-        //         background: rgba(255, 255, 255, 0.3);
-        //         border-radius: 50%;
-        //         transform: scale(0);
-        //         animation: ripple 0.6s linear;
-        //         pointer-events: none;
-        //     `;
-            
-        //     this.appendChild(ripple);
-            
-        //     setTimeout(() => {
-        //         ripple.remove();
-        //     }, 600);
-        // });
-
-        // Add CSS animation for ripple effect
-        // const style = document.createElement('style');
-        // style.textContent = `
-        //     @keyframes ripple {
-        //         to {
-        //             transform: scale(2);
-        //             opacity: 0;
-        //         }
-        //     }
-        // `;
-        // document.head.appendChild(style);
-    </script>
 </body>
 </html>
