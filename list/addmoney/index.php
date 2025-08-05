@@ -137,9 +137,9 @@ $account_name = "Web Learner";
 
 
       <?php include '../../include/app_settings.php'; ?>
-<footer style="text-align:center; font-size:14px; color:var(--secondary-color); background-color:var(--primary-color); padding:20px 0;">
-    <?php echo APP_NAME_FOOTER; ?>
-</footer>
+        <footer style="text-align:center; font-size:14px; color:var(--secondary-color); background-color:var(--primary-color); padding:20px 0;">
+            <?php echo APP_NAME_FOOTER; ?>
+        </footer>
 
 
     <script>

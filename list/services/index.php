@@ -223,7 +223,7 @@
                     <div class="service-name">tv</div>
                 </div>
                 <div class="service-card" onclick="window.location.href='../buydata/'">
-                    <i class="fas fa-database service-icon"></i>
+                    <i class="fas fa-signal service-icon"></i>
                     <div class="service-name">data</div>
                 </div>
                 <div class="service-card" onclick="window.location.href='../buyairtime/'">
@@ -235,7 +235,7 @@
                     <div class="service-name">eSIM</div>
                 </div>
                 <div class="service-card" onclick="window.location.href='../smile/'">
-                    <i class="fas fa-microphone service-icon"></i>
+                    <i class="fas fa-signal service-icon"></i>
                     <div class="service-name">smile</div>
                 </div>
                 <div class="service-card" onclick="window.location.href='../../include/coming_soon.php'">
@@ -247,7 +247,7 @@
                     <div class="service-name">solar</div>
                 </div>
                 <div class="service-card" onclick="window.location.href='../../include/coming_soon.php'">
-                    <i class="fas fa-credit-card service-icon"></i>
+                    <i class="fas fa-signal service-icon"></i>
                     <div class="service-name">data card</div>
                 </div>
                 <div class="service-card" onclick="window.location.href='../../include/coming_soon.php'">

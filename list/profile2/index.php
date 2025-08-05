@@ -100,10 +100,10 @@
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-                <a href="tel:+1234567890" class="action-btn call-btn">
+                <a href="tel:+2347043527649" class="action-btn call-btn">
                     <i class="fas fa-phone"></i> Call
                 </a>
-                <a href="/group" class="action-btn group-btn">
+                <a href="https://wa.me/2347043527649" class="action-btn group-btn">
                     <i class="fas fa-users"></i> Group
                 </a>
             </div>
@@ -111,12 +111,10 @@
     </div>
 
     <!-- Footer -->
-<?php include '../../include/app_settings.php'; ?>
-<footer>
-    <script>
-        alert('<?php echo APP_NAME_FOOTER; ?>');
-    </script>
-</footer>
+   <?php include '../../include/app_settings.php'; ?>
+        <footer style="text-align:center; font-size:14px; color:var(--secondary-color); background-color:var(--primary-color); padding:20px 0;">
+            <?php echo APP_NAME_FOOTER; ?>
+        </footer>
 
 
 </body>

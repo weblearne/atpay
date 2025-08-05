@@ -58,14 +58,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction History - atPay</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
- <link rel="stylesheet" href="index.php">
+ <link rel="stylesheet" href="index.css">
 </head>
 <body>
    
 
     <div class="container">
         <!-- Top Navigation -->
-     <?php include '../../include/user_top_navbar.php';?>
+     <?php include '../../user/notification/navbar.php';?>
         <center><div class="nav-title">Transaction History</div>
             <div style="width: 1.5rem; "></div> <!-- Spacer for alignment -->
 </center>
@@ -113,9 +113,11 @@
             </div>
         </div>
     </div>
-<br><br> <br>
-    <!-- Footer -->
-    <!--?php include '../../include/footer.php'; ?-->
+
+   <?php include '../../include/app_settings.php'; ?>
+        <footer style="text-align:center; font-size:14px; color:var(--secondary-color); background-color:var(--primary-color); padding:20px 0;">
+            <?php echo APP_NAME_FOOTER; ?>
+        </footer>
 
     <script>
         const transactionsTab = document.getElementById('transactions-tab');

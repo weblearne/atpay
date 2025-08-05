@@ -34,7 +34,7 @@
     <i class="fas fa-house"></i>
     <span>Home</span>
   </a>
-  <a href="#" class="nav-item">
+  <a href="../list/services/" class="nav-item">
     <i class="fas fa-gear"></i>
     <span>Services</span>
   </a>

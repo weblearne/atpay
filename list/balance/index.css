@@ -1,0 +1,219 @@
+        :root {
+            --primary-color: #4c1d95;
+            --secondary-color: #ffffff;
+            --accent-color: #6366f1;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --hover-bg: #f3f4f6;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --alternate-bg: #f9fafb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-nav {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .balance-section {
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "📞";
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .balance-options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .balance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--alternate-bg);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+
+        .balance-item:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .balance-item .icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+        }
+
+        .balance-item .text {
+            flex-grow: 1;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .balance-item .code {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .balance-item .call-icon {
+            font-size: 1.25rem;
+            color: var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.75rem;
+            }
+
+            .top-nav {
+                padding: 0.75rem;
+            }
+
+            .nav-title {
+                font-size: 1rem;
+            }
+
+            .back-btn {
+                font-size: 1.25rem;
+            }
+
+            .balance-section {
+                padding: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+
+            .subtitle {
+                font-size: 0.75rem;
+            }
+
+            .balance-item .icon {
+                font-size: 1.25rem;
+            }
+
+            .balance-item .text {
+                font-size: 0.875rem;
+            }
+
+            .balance-item .code {
+                font-size: 0.75rem;
+            }
+
+            .balance-item .call-icon {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-title {
+                font-size: 0.875rem;
+            }
+
+            .back-btn {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.125rem;
+            }
+
+            .balance-item {
+                padding: 0.75rem;
+            }
+
+            .balance-item .icon {
+                font-size: 1rem;
+            }
+
+            .balance-item .text {
+                font-size: 0.75rem;
+            }
+
+            .balance-item .code {
+                font-size: 0.625rem;
+            }
+        }

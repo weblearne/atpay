@@ -108,7 +108,7 @@
   <!-- Left: Logo and Balance -->
   <div class="logo-balance" style="display: flex; align-items: center; gap: 1rem;">
     <div class="logo" >
-      <a href="profile2/">  <img src="../images/logo.png" style="width: 50px; height: 50px; border-radius: 50%;" alt="Logo" ></a>
+      <a href="../list/profile2/">  <img src="../images/logo.png" style="width: 50px; height: 50px; border-radius: 50%;" alt="Logo" ></a>
     
     </div>
     <button class="balance-btn" onclick="toggleBalanceModal()">
@@ -145,10 +145,10 @@
         }
 
         function showNotifications() {
-            alert('Showing notifications...');
+          window.location.href = 'notification/';
         }
 
         function openCustomerCare() {
-            alert('Connecting to customer care...');
+          window.location.href='../user/chat/';
         }
 </script>

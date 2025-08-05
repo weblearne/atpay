@@ -8,6 +8,7 @@
             --text-secondary: #6b7280;
             --border-color: #e5e7eb;
             --hover-bg: #f3f4f6;
+            --light-blue:#0ea5e9;
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         }
 
@@ -19,7 +20,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f9fafb;
+            background-color: var(--secondary-color);
             color: var(--text-primary);
             line-height: 1.6;
         }
@@ -129,7 +130,7 @@
 
         .provider-card.selected {
             border-color: var(--primary-color);
-            background-color: #f3f4f6;
+            background-color: var(--secondary-color);
         }
 
         .provider-logo {
@@ -196,15 +197,15 @@
 
         /* Customer Info */
         .customer-info {
-            background-color: #f0f9ff;
-            border: 1px solid #0ea5e9;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--light-blue);
             border-radius: 0.5rem;
             padding: 1rem;
             margin-top: 1rem;
         }
 
         .customer-info h4 {
-            color: #0ea5e9;
+            color: var(--light-blue);
             margin-bottom: 0.5rem;
         }
 
@@ -236,7 +237,7 @@
 
         .plan-card.selected {
             border-color: var(--primary-color);
-            background-color: #f3f4f6;
+            background-color:var(--hover-bg);
         }
 
         .plan-name {
@@ -269,7 +270,7 @@
         /* Proceed Button */
         .proceed-btn {
             background-color: var(--primary-color);
-            color: white;
+            color: var(--secondary-color);
             border: none;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
@@ -282,7 +283,7 @@
         }
 
         .proceed-btn:hover {
-            background-color: #3730a3;
+            background-color: var(--primary-color);
             transform: translateY(-1px);
         }
 

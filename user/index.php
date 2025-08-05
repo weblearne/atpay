@@ -7,7 +7,7 @@
 //     exit();
 // }
 
-$balance = "1,000,000";
+$balance = "0.000";
 $accountNumber = "0000000000";
 $accountName = "Web Learner";
 $bankName = "Palmpay";
@@ -124,11 +124,11 @@ $bankName = "Palmpay";
         <div class="grid-item-title">Cable TV</div>
       </div>
       <div class="grid-item" onclick="buyData()" role="button">
-        <div class="grid-item-icon"><i class="fas fa-chart-bar"></i></div>
+        <div class="grid-item-icon"><i class="fas fa-signal"></i></div>
         <div class="grid-item-title">Data</div>
       </div>
       <div class="grid-item" onclick="buyAirtime()" role="button">
-        <div class="grid-item-icon"><i class="fas fa-mobile-alt"></i></div>
+        <div class="grid-item-icon"><i class="fas fa-phone"></i></div>
         <div class="grid-item-title">Airtime</div>
       </div>
       <div class="grid-item" onclick="buyEsim()" role="button">
@@ -136,7 +136,7 @@ $bankName = "Palmpay";
         <div class="grid-item-title">eSIM</div>
       </div>
       <div class="grid-item" onclick="buySmile()" role="button">
-        <div class="grid-item-icon"><i class="fas fa-sim-card"></i></div>
+        <div class="grid-item-icon"><i class="fas fa-signal"></i></div>
         <div class="grid-item-title">Smile</div>
       </div>
       <div class="grid-item" onclick="buyExamPin()" role="button">
@@ -151,9 +151,27 @@ $bankName = "Palmpay";
   </section>
 
   <!-- Floating Chat Button -->
-  <button class="chat-btn" onclick="openChat()" aria-label="Chat">
-    <i class="fas fa-comment-dots"></i>
-  </button>
+  <!-- Chat Button -->
+<button class="chat-btn" id="chat-btn" onclick="toggleChatOptions()" aria-label="Open chat options" aria-expanded="false">
+        <i class="fas fa-comment-dots"></i>
+        <span class="sr-only">Open chat options</span>
+    </button>
+
+    <!-- Dropdown Chat Options -->
+    <div id="chat-options" class="chat-options">
+        <ul>
+            <li onclick="redirectTo('whatsapp')" role="button" tabindex="0" aria-label="Chat via WhatsApp">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </li>
+            <li onclick="redirectTo('inapp')" role="button" tabindex="0" aria-label="Open in-app chat">
+                <i class="fas fa-comments"></i> In-App Chat
+            </li>
+            <li onclick="redirectTo('email')" role="button" tabindex="0" aria-label="Send an email">
+                <i class="fas fa-envelope"></i> Email
+            </li>
+        </ul>
+    </div>
+
 </main>
 <br><br><br>
     <footer>
@@ -212,17 +230,17 @@ $bankName = "Palmpay";
 
         // Quick Access Functions
         function goToBalance() {
-            alert('Redirecting to balance page...');
+            // alert('Redirecting to balance page...');
             // Simulate page redirect
-            window.location.href = '#balance-page';
+              window.location.href = '../list/balance/';
         }
 
         function openContacts() {
-            alert('Opening contacts...');
+           window.location.href = '../include/coming_soon.php';
         }
 
         function voiceCall() {
-            alert('Starting voice call...');
+       window.location.href = '../include/coming_soon.php';
         }
 
         // Bill Payment Functions
@@ -276,6 +294,94 @@ $bankName = "Palmpay";
             document.querySelector('.ad-content h2').textContent = banner.title;
             document.querySelector('.ad-content p').textContent = banner.subtitle;
         }, 5000);
+
+
+
+        //chat button 
+      //         function toggleChatOptions() {
+      //   const options = document.getElementById('chat-options');
+      //   options.style.display = options.style.display === 'block' ? 'none' : 'block';
+      // }
+
+      // function redirectTo(option) {
+      //   let url = '#';
+
+      //   if (option === 'whatsapp') {
+      //     url = 'https://wa.me/2348012345678'; // Replace with your WhatsApp number
+      //   } else if (option === 'inapp') {
+      //     url = '/in-app-chat'; // Replace with your in-app chat page URL
+      //   } else if (option === 'email') {
+      //     url = 'mailto:support@example.com'; // Replace with your email
+      //   }
+
+      //   window.location.href = url;
+      // }
+
+      const chatBtn = document.getElementById('chat-btn');
+        const chatOptions = document.getElementById('chat-options');
+
+        // Toggle chat options
+        function toggleChatOptions() {
+            const isOpen = chatOptions.classList.contains('active');
+            chatOptions.classList.toggle('active', !isOpen);
+            chatBtn.classList.toggle('active', !isOpen);
+            chatBtn.setAttribute('aria-expanded', !isOpen);
+
+            if (!isOpen) {
+                // Focus on first option for accessibility
+                chatOptions.querySelector('li').focus();
+            }
+        }
+
+        // Redirect to chat platform
+        function redirectTo(option) {
+            let url = '#';
+            switch (option) {
+                case 'whatsapp':
+                    url = 'https://wa.me/2347043527649'; 
+                    break;
+                case 'inapp':
+                    url = 'chat/'; 
+                    break;
+                case 'email':
+                     url = 'mailto:saifullah.khmisu@gmail.com';
+                    break;
+            }
+            window.location.href = url;
+            toggleChatOptions(); 
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!chatBtn.contains(e.target) && !chatOptions.contains(e.target)) {
+                chatOptions.classList.remove('active');
+                chatBtn.classList.remove('active');
+                chatBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Keyboard navigation for accessibility
+        chatOptions.querySelectorAll('li').forEach(item => {
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    item.click();
+                }
+            });
+        });
+
+        // Prevent zoom on mobile inputs
+        chatBtn.addEventListener('focus', () => {
+            if (window.innerWidth <= 768) {
+                document.querySelector('meta[name="viewport"]').setAttribute('content', 
+                    'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            }
+        });
+
+        chatBtn.addEventListener('blur', () => {
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 
+                'width=device-width, initial-scale=1.0');
+        });
 </script>
 
 </body>
