@@ -3,11 +3,11 @@
 
 // // Check if user is logged in
 // if (!isset($_SESSION['user_id'])) {
-//     header('Location: ../index.php');
+//     header('Location: ../Auth/login/');
 //     exit();
 // }
 
-$balance = "0.000";
+$balance = "10,000,000";
 $accountNumber = "0000000000";
 $accountName = "Web Learner";
 $bankName = "Palmpay";
