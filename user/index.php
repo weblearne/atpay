@@ -1,17 +1,59 @@
 <?php
+// Start the session
 // session_start();
 
-// // Check if user is logged in
-// if (!isset($_SESSION['user_id'])) {
-//     header('Location: ../Auth/login/');
+// // Check if token exists in session
+// if (!isset($_SESSION['atpay_auth_token_key'])) {
+//     header("Location: ../Auth/login");
 //     exit();
 // }
 
-$balance = "10,000,000";
-$accountNumber = "0000000000";
-$accountName = "Web Learner";
-$bankName = "Palmpay";
+// Fetch user info function
+function fetchUserInfo($token) {
+    $apiUrl = "https://atpay.ng/api/user/";
+
+    $ch = curl_init($apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Content-Type: application/json",
+        "Authorization: Token $token"
+    ]);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "{}");
+
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    return json_decode($result, true);
+}
+
+// Get user info from API
+$response = fetchUserInfo($_SESSION['atpay_auth_token_key']);
+
+// Check API response
+if (isset($response['error']) && $response['error'] === false) {
+    $balance       = number_format($response['balance'], 2);
+    $accountNumber = $response['account_number'] ?? "N/A";
+    $accountName   = $response['account_name'] ?? "N/A";
+    $bankName      = $response['bank_name'] ?? "N/A";
+} else {
+    $balance       = "0.00";
+    $accountNumber = "N/A";
+    $accountName   = "N/A";
+    $bankName      = "N/A";
+
+    // If token invalid, logout
+    if (isset($response['message']) && stripos($response['message'], 'unauthorized') !== false) {
+        session_destroy();
+        header("Location: ../Auth/login/?error=SessionExpired");
+        exit();
+    }
+}
+
+// Include navbar
+include 'user_top_nav_bar.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +67,7 @@ $bankName = "Palmpay";
   <link rel="stylesheet" href="user_style.css" />
 </head>
 <body>
-  <?php include 'user_top_nav_bar.php'?>
+
 
 <!-- Balance Modal -->
 <div id="balanceModal" class="modal">
@@ -37,6 +79,7 @@ $bankName = "Palmpay";
     <div class="account-item">
       <strong>Bank Transfer</strong><br>
       <small>Account: <?php echo $accountNumber; ?></small><br>
+       <small>accountName: <?php echo $accountName; ?></small><br>
       <small>Bank: <?php echo $bankName; ?></small>
     </div>
     <div class="account-item">

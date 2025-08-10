@@ -1,37 +1,42 @@
 <?php
 session_start();
-$resetMessage = "";
-$messageClass = "";
+$responseMessage = "";
+$responseType = ""; // 'success' or 'error'
+$redirectUrl = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $phone = trim($_POST['phone'] ?? '');
+    $PhoneNumber = trim($_POST['PhoneNumber']);
 
-    if (empty($phone)) {
-        $resetMessage = "Please enter your phone number.";
-        $messageClass = "error";
-    } elseif (!preg_match('/^\d{3,}$/', $phone)) {
-        $resetMessage = "Phone number must be at least 3 digits.";
-        $messageClass = "error";
+    if (!is_numeric($PhoneNumber) || strlen($PhoneNumber) !== 11) {
+        $responseMessage = "Phone number must be 11 digits!";
+        $responseType = "error";
     } else {
-        // Simulate checking if phone is registered
-        $validPhones = ['123', '456', '789'];
-        if (in_array($phone, $validPhones)) {
-            // Generate OTP (for demo purposes)
-            $otp = rand(100000, 999999);
-            $_SESSION['otp'] = $otp;
-            $_SESSION['phone'] = $phone;
+        $data = json_encode(["PhoneNumber" => $PhoneNumber]);
 
-            // Simulate sending OTP to email (replace with actual email service)
-            $resetMessage = "OTP has been sent to your registered email. Redirecting...";
-            $messageClass = "success";
+        $ch = curl_init('https://atpay.ng/authen/forgotPassword.php');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-            // Redirect to OTP page after 2 seconds
-            header("refresh:2;url=step2");
-            exit;
+        $result = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            $responseMessage = "Connection error: " . curl_error($ch);
+            $responseType = "error";
         } else {
-            $resetMessage = "Phone number not registered.";
-            $messageClass = "error";
+            $response = json_decode($result, true);
+            if (isset($response['error']) && $response['error'] === false) {
+                $_SESSION['reset_phone'] = $PhoneNumber;
+                $responseMessage = $response['message'] ?? "OTP sent successfully!";
+                $responseType = "success";
+                $redirectUrl = "step2/";
+            } else {
+                $responseMessage = $response['message'] ?? "Failed to send OTP!";
+                $responseType = "error";
+            }
         }
+        curl_close($ch);
     }
 }
 ?>
@@ -42,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>atPay Wallet Reset Password</title>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -54,14 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <h2>Reset Password</h2>
 
-            <?php if ($resetMessage): ?>
-                <div class="message <?php echo $messageClass; ?>"><?php echo $resetMessage; ?></div>
-            <?php endif; ?>
+       
 
             <form id="resetForm" method="POST">
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                    <input type="tel" id="phone" name="PhoneNumber" placeholder="Enter your phone number" required>
                 </div>
                 <button type="submit">Proceed</button>
             </form>
@@ -73,18 +77,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <footer style="text-align:center; font-size:14px; color:var(--secondary-color); background-color:var(--primary-color); padding:20px 0;">
             <?php echo APP_NAME_FOOTER; ?>
         </footer>
+    <?php if ($responseMessage): ?>
     <script>
-        document.getElementById('resetForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const phone = document.getElementById('phone').value.trim();
-            if (!/^\d{3,}$/.test(phone)) {
-                const messageContainer = document.querySelector('.message');
-                if (messageContainer) messageContainer.remove();
-                document.querySelector('.login-container').insertAdjacentHTML('afterbegin', '<div class="message error">Phone number must be at least 3 digits.</div>');
-                return;
-            }
-            this.submit();
+        Swal.fire({
+            icon: '<?= $responseType ?>',
+            title: '<?= ucfirst($responseType) ?>',
+            text: '<?= $responseMessage ?>',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            <?php if ($redirectUrl): ?>
+                window.location.href = '<?= $redirectUrl ?>';
+            <?php endif; ?>
         });
     </script>
+    <?php endif; ?>
 </body>
 </html>
