@@ -51,12 +51,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Save user data and token in session
             $_SESSION['user'] = $response;
             if (isset($response['AthuKey'])) {
-                $_SESSION['atpay_auth_token_key'] = $response['AthuKey'];
-                $_SESSION['balance'] = $response['Balance'];
-                $_SESSION['Bonus'] = $response['Bonus'];
+                $_SESSION['atpay_auth_token_key'] = $response['AthuKey']?? "";
+                $_SESSION['balance'] = $response['Balance']?? "";
+                $_SESSION['Bonus'] = $response['Bonus']?? "";
                 $_SESSION['account_number'] = "";
                 $_SESSION['account_name'] = "";
                 $_SESSION['bank_name'] = "";
+
+                $_SESSION['user_type'] = "";
+                $_SESSION['user_status'] = "";
+                $_SESSION['JoinDate'] = $response['JoinDate'] ?? "";
+                $_SESSION['Lastlog'] = $response['Lastlog'] ?? "";
 
                
             }
