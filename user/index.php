@@ -1,12 +1,12 @@
 <?php
 // Start the session
-// session_start();
+session_start();
 
-// // Check if token exists in session
-// if (!isset($_SESSION['atpay_auth_token_key'])) {
-//     header("Location: ../Auth/login");
-//     exit();
-// }
+// Check if token exists in session
+if (!isset($_SESSION['atpay_auth_token_key'])) {
+    header("Location: ../Auth/login");
+    exit();
+}
 
 // Fetch user info function
 function fetchUserInfo($token) {
@@ -32,7 +32,7 @@ $response = fetchUserInfo($_SESSION['atpay_auth_token_key']);
 
 // Check API response
 if (isset($response['error']) && $response['error'] === false) {
-    $balance       = number_format($response['balance'], 2);
+    $balance       = number_format($response['balance'] ?? '0', 2);
     $accountNumber = $response['account_number'] ?? "N/A";
     $accountName   = $response['account_name'] ?? "N/A";
     $bankName      = $response['bank_name'] ?? "N/A";

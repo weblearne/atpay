@@ -50,8 +50,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Save user data and token in session
             $_SESSION['user'] = $response;
-            if (isset($response['token'])) {
-                $_SESSION['atpay_auth_token_key'] = $response['token'];
+            if (isset($response['AthuKey'])) {
+                $_SESSION['atpay_auth_token_key'] = $response['AthuKey'];
+                $_SESSION['balance'] = $response['Balance'];
+                $_SESSION['balance'] = $response['Balance'];
+                $_SESSION['account_number'] = "";
+                $_SESSION['account_name'] = "";
+                $_SESSION['bank_name'] = "";
+
+               
             }
         } else {
             // Error from API
