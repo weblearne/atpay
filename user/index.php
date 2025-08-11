@@ -10,19 +10,24 @@ if (!isset($_SESSION['atpay_auth_token_key'])) {
 
 // Fetch user info function
 function fetchUserInfo($token) {
-    $apiUrl = "https://atpay.ng/api/user/";
-
-    $ch = curl_init($apiUrl);
+    $endpoint = "https://atpay.ng/api/user/";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $endpoint);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Content-Type: application/json",
+         "Content-Type: application/json",
         "Authorization: Token $token"
     ]);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "{}");
 
     $result = curl_exec($ch);
-    curl_close($ch);
+
+    if (curl_errno($ch)) {
+        echo "cURL Error: " . curl_error($ch);
+    } else {
+        echo "API Response: " . $response;
+    }
+
+    curl_close($ch); 
 
     return json_decode($result, true);
 }
