@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($response['AthuKey'])) {
                 $_SESSION['atpay_auth_token_key'] = $response['AthuKey'];
                 $_SESSION['balance'] = $response['Balance'];
-                $_SESSION['balance'] = $response['Balance'];
+                $_SESSION['Bonus'] = $response['Bonus'];
                 $_SESSION['account_number'] = "";
                 $_SESSION['account_name'] = "";
                 $_SESSION['bank_name'] = "";
