@@ -32,15 +32,15 @@ $response = fetchUserInfo($_SESSION['atpay_auth_token_key']);
 
 // Check API response
 if (isset($response['error']) && $response['error'] === false) {
-    $balance       = number_format($response['balance'] ?? '0', 2);
-    $accountNumber = $response['account_number'] ?? "N/A";
-    $accountName   = $response['account_name'] ?? "N/A";
-    $bankName      = $response['bank_name'] ?? "N/A";
+    $user_balance       = number_format($response['Balance'] ?? '0', 2);
+    $account_number = $response['account_number'] ?? "N/A";
+    $account_name   = $response['account_name'] ?? "N/A";
+    $bank_name       = $response['bank_name'] ?? "N/A";
 } else {
-    $balance       = "0.00";
-    $accountNumber = "N/A";
-    $accountName   = "N/A";
-    $bankName      = "N/A";
+    $user_balance       = "0.00";
+    $account_number = "N/A";
+    $account_name   = "N/A";
+    $bank_name       = "N/A";
 
     // If token invalid, logout
     if (isset($response['message']) && stripos($response['message'], 'unauthorized') !== false) {
@@ -78,9 +78,9 @@ include 'user_top_nav_bar.php';
     </div>
     <div class="account-item">
       <strong>Bank Transfer</strong><br>
-      <small>Account: <?php echo $accountNumber; ?></small><br>
-       <small>accountName: <?php echo $accountName; ?></small><br>
-      <small>Bank: <?php echo $bankName; ?></small>
+      <small>Account: <?php echo $account_number; ?></small><br>
+       <small>accountName: <?php echo $account_name; ?></small><br>
+      <small>Bank: <?php echo $bank_name; ?></small>
     </div>
     <div class="account-item">
       <strong>USSD</strong><br>

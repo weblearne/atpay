@@ -1,10 +1,22 @@
 <?php
-// Hard-coded user data
-$user_balance = "NGN 5,000.00";
-$user_bonus = "NGN 0.00";
-$account_number = "1234567890";
-$bank_name = "Palmpay";
-$account_name = "Web Learner";
+session_start();
+
+// Redirect if not logged in
+if (!isset($_SESSION['atpay_auth_token_key'])) {
+    header("Location: ../../Auth/login.php");
+    exit();
+}
+
+// Retrieve wallet details from session
+$user_balance_raw = $_SESSION['Balance'] ?? 0;
+$user_bonus_raw   = $_SESSION['Bonus'] ?? 0;
+$account_number   = $_SESSION['account_number'] ?? "N/A";
+$bank_name        = $_SESSION['bank_name'] ?? "N/A";
+$account_name     = $_SESSION['account_name'] ?? "N/A";
+
+// Format currency values
+$user_balance = "NGN " . number_format($user_balance_raw, 2);
+$user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +61,7 @@ $account_name = "Web Learner";
                 </div>
                 
                 <div class="balance" id="balance"><?php echo $user_balance; ?></div>
-                <div class="bonus" id="bonus">NGN Bonus: <?php echo $user_bonus; ?></div>
+                <div class="bonus" id="bonus">NGN Bonus:<?php echo $user_bonus; ?></div>
 
                 <div class="account-info">
                     <div class="account-row">
@@ -67,7 +79,7 @@ $account_name = "Web Learner";
                     </div>
                     <div class="account-row">
                         <span class="account-label">Account Name</span>
-                        <span class="account-value"><?php echo $account_name; ?></span>
+                        <span class="account-value"><?php echo $bank_name; ?></span>
                     </div>
                 </div>
             </div>
