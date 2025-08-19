@@ -7,17 +7,60 @@ if (!isset($_SESSION['atpay_auth_token_key'])) {
     exit();
 }
 
-// Retrieve wallet details from session
-$user_balance_raw = $_SESSION['Balance'] ?? 0;
-$user_bonus_raw   = $_SESSION['Bonus'] ?? 0;
-$account_number   = $_SESSION['account_number'] ?? "N/A";
-$bank_name        = $_SESSION['bank_name'] ?? "N/A";
-$account_name     = $_SESSION['account_name'] ?? "N/A";
+// Function to fetch user info from API
+function fetchUserInfo($token) {
+    $endpoint = "https://atpay.ng/api/user/";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $endpoint);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Content-Type: application/json",
+        "Authorization: Token $token"
+    ]);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([]));
+
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    return json_decode($result, true);
+}
+
+// Fetch details using token
+$response = fetchUserInfo($_SESSION['atpay_auth_token_key']);
+
+if (isset($response['error']) && $response['error'] === false) {
+    // Wallet info
+    $wallet = $response['wallets'][0] ?? [];
+    $user_balance_raw = floatval(str_replace(["N",","], "", $wallet['AccountBalance'] ?? 0));
+    $user_bonus_raw   = floatval(str_replace(["N",","], "", $wallet['AccountBonus'] ?? 0));
+
+    // Accounts (first one as default)
+    $account = $response['accounts'][0] ?? [];
+    $account_number = $account['AccNumber'] ?? "N/A";
+    $bank_name      = $account['BnakName'] ?? "N/A";
+    $account_name   = $account['AccName'] ?? "N/A";
+
+} else {
+    $user_balance_raw = 0;
+    $user_bonus_raw   = 0;
+    $account_number   = "N/A";
+    $bank_name        = "N/A";
+    $account_name     = "N/A";
+
+    // If token invalid, logout
+    if (isset($response['message']) && stripos($response['message'], 'unauthorized') !== false) {
+        session_destroy();
+        header("Location: ../../Auth/login.php?error=SessionExpired");
+        exit();
+    }
+}
 
 // Format currency values
 $user_balance = "NGN " . number_format($user_balance_raw, 2);
 $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +122,7 @@ $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
                     </div>
                     <div class="account-row">
                         <span class="account-label">Account Name</span>
-                        <span class="account-value"><?php echo $bank_name; ?></span>
+                        <span class="account-value"><?php echo $account_name; ?></span>
                     </div>
                 </div>
             </div>

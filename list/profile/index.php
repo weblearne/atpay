@@ -1,29 +1,94 @@
 <?php
 session_start();
 
-// Enhanced user data structure
-$user_id = $_SESSION['user_id'] ?? 1;
-$user = [
-    'id' => $user_id,
-    'first_name' => $_SESSION['first_name'] ?? 'BASIRU',
-    'last_name' => $_SESSION['last_name'] ?? 'LAWAN', 
-    'name' => ($_SESSION['first_name'] ?? 'Basiru') . ' ' . ($_SESSION['last_name'] ?? 'Lawan'),
-    'email' => $_SESSION['email'] ?? 'basirulawan02@gmail.com',
+// === Redirect if token missing ===
+if (!isset($_SESSION['atpay_auth_token_key'])) {
+    header("Location: ../Auth/login");
+    exit();
+}
+
+$token = $_SESSION['atpay_auth_token_key'];
+
+// === Fetch user info from API ===
+function fetchUserInfo($token) {
+    $endpoint = "https://atpay.ng/api/user/";
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $endpoint);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true); // API requires POST
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Accept: application/json",
+        "Authorization: Token $token"
+    ]);
+
+    $result = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        echo "cURL Error: " . curl_error($ch);
+    }
+
+    curl_close($ch);
+
+    return json_decode($result, true);
+}
+
+$response = fetchUserInfo($token);
+$user_id  = $_SESSION['user_id'] ?? 1;
+
+// === Parse API response ===
+if ($response && empty($response['error'])) {
+    // ✅ API Success
+    $wallet  = $response['wallets'][0] ?? [];
+    $account = $response['accounts'][0] ?? [];
+
+   $user = [
+    'id'              => $user_id,
+    'name'            => $response['name'] ?? 'Unknown User',
+    'email'           => $_SESSION['user_email'] ?? '', // fallback from session, not API
     'profile_picture' => $_SESSION['profile_picture'] ?? '',
-    'account_status' => 'verified',
-    'account_tier' => 'Premium'
+    'account_status'  => $response['status'] ?? 'verified',
+    'account_tier'    => $response['tier'] ?? 'Basic'
 ];
 
-$status = [
-    'transaction_count' => 1250,
-    'total_spent' => 850000.00,
-    'total_bonus' => 12500.50,
-    'monthly_transactions' => 89,
-    'success_rate' => 98.5,
-    'account_balance' => 45000.00
-];
 
-// Handle profile picture upload
+    $status = [
+        'transaction_count'    => $response['transaction_count'] ?? 0,
+        'total_spent'          => $response['total_spent'] ?? 0.00,
+        'total_bonus'          => $wallet['AccountBonus'] ?? 0.00,
+        'monthly_transactions' => $response['monthly_transactions'] ?? 0,
+        'success_rate'         => $response['success_rate'] ?? 0,
+        'account_balance'      => $wallet['AccountBalance'] ?? 0.00
+    ];
+
+} else {
+    // ❌ API Failed
+    if (isset($response['message']) && stripos($response['message'], 'unauthorized') !== false) {
+        session_destroy();
+        header("Location: ../Auth/login/?error=SessionExpired");
+        exit();
+    }
+
+    $user = [
+        'id'              => $user_id,
+        'name'            => 'Guest',
+        'email'           => '',
+        'profile_picture' => $_SESSION['profile_picture'] ?? '',
+        'account_status'  => 'unknown',
+        'account_tier'    => ''
+    ];
+
+    $status = [
+        'transaction_count'    => 0,
+        'total_spent'          => 0.00,
+        'total_bonus'          => 0.00,
+        'monthly_transactions' => 0,
+        'success_rate'         => 0,
+        'account_balance'      => 0.00
+    ];
+}
+
+// === Profile Picture Upload ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
     $upload_dir = 'uploads/profile_pictures/';
     $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
@@ -40,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
         $upload_path = $upload_dir . $new_filename;
 
         if (move_uploaded_file($file['tmp_name'], $upload_path)) {
-            // Remove old picture
             if (!empty($user['profile_picture']) && file_exists($user['profile_picture'])) {
                 unlink($user['profile_picture']);
             }
@@ -59,21 +123,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
     exit();
 }
 
-// Handle profile update
+// === Profile Update ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
-    // Here you would typically update the database
     $_SESSION['success_message'] = 'Profile updated successfully!';
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
 
-// Handle logout
+// === Logout ===
 if (isset($_GET['logout'])) {
     session_destroy();
     header('Location: login.php');
     exit();
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

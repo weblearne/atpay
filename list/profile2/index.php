@@ -1,20 +1,66 @@
- <?php
-    // session_start();
+<?php
+session_start();
 
-    // Hardcoded user data
+// ✅ Redirect if not logged in
+if (!isset($_SESSION['atpay_auth_token_key'])) {
+    header("Location: ../../Auth/login.php");
+    exit();
+}
+
+$auth_token = $_SESSION['atpay_auth_token_key'];
+
+// ✅ API endpoint for fetching user details
+$api_url = "https://atpay.ng/api/user/";
+
+// ✅ Initialize CURL
+$ch = curl_init($api_url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Authorization: Bearer " . $auth_token,
+    "Content-Type: application/json"
+]);
+
+$response = curl_exec($ch);
+if (curl_errno($ch)) {
+    die("Curl error: " . curl_error($ch));
+}
+curl_close($ch);
+
+// ✅ Decode API response
+$data = json_decode($response, true);
+
+// ✅ Check if API returned success
+if ($data && isset($data['user'])) {
     $user = [
-        'name' => 'Basiru Lawan',
-        'phone' => '07043527649',
-        'account_type' => 'Basic',
-        'account_name' => 'Smart User',
-        'limit' => '20,000',
-        'status' => 'Active',
-        'kyc_level' => 'Level 1',
-        'daily_airtime_limit' => '5,000',
-        'daily_data_limit' => '20,000',
-        'relationship_manager' => 'atPay'
+        'name' => $data['user']['name'] ?? "N/A",
+        'phone' => $data['user']['phone'] ?? "N/A",
+        'account_type' => $data['user']['account_type'] ?? "N/A",
+        'account_name' => $data['user']['account_name'] ?? "N/A",
+        'limit' => $data['user']['limit'] ?? "N/A",
+        'status' => $data['user']['status'] ?? "N/A",
+        'kyc_level' => $data['user']['kyc_level'] ?? "N/A",
+        'daily_airtime_limit' => $data['user']['daily_airtime_limit'] ?? "N/A",
+        'daily_data_limit' => $data['user']['daily_data_limit'] ?? "N/A",
+        'relationship_manager' => $data['user']['relationship_manager'] ?? "N/A"
     ];
-    ?>
+} else {
+    // Fallback if API fails
+    $user = [
+        'name' => "N/A",
+        'phone' => "N/A",
+        'account_type' => "N/A",
+        'account_name' => "N/A",
+        'limit' => "N/A",
+        'status' => "N/A",
+        'kyc_level' => "N/A",
+        'daily_airtime_limit' => "N/A",
+        'daily_data_limit' => "N/A",
+        'relationship_manager' => "N/A"
+    ];
+}
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,9 +87,10 @@
             <!-- Profile Photo -->
             <img src="https://img.icons8.com/color/120/user-male-circle--v1.png" alt="Cartoon Profile" class="profile-img">
 
-            <!-- User Info -->
-            <div class="user-name"><?php echo htmlspecialchars($user['name']); ?></div>
-            <div class="user-phone"><?php echo htmlspecialchars($user['phone']); ?></div>
+           <!-- User Info -->
+<div class="user-name"><?php echo htmlspecialchars($user['name']); ?></div>
+<div class="user-phone"><?php echo htmlspecialchars($user['phone']); ?></div>
+
 
             <!-- Account Type Section -->
             <div class="section">

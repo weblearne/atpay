@@ -1,199 +1,138 @@
 <?php
 session_start();
 
-// Nigerian Electricity Distribution Companies
-$networks = [
-    'kedco' => [
-        'name' => 'KEDCO',
-        'full_name' => 'Kano Electricity Distribution Company',
-        'logo' => '../../images/kedco.png',
-        'color' => '#FF6B35'
-    ],
-    'kaedco' => [
-        'name' => 'KAEDCO', 
-        'full_name' => 'Kaduna Electric',
-        'logo' => '../../images/kaedco.png',
-        'color' => '#4ECDC4'
-    ],
-    'aedc' => [
-        'name' => 'AEDC',
-        'full_name' => 'Abuja Electricity Distribution Company',
-        'logo' => '../../images/aedc.png',
-        'color' => '#45B7D1'
-    ],
-    'ie' => [
-        'name' => 'IKEDC',
-        'full_name' => 'Ikeja Electric',
-        'logo' => '../../images/ie.png',
-        'color' => '#96CEB4'
-    ],
-    'ekedc' => [
-        'name' => 'EKEDC',
-        'full_name' => 'Eko Electricity Distribution Company',
-        'logo' => '../../images/ekedc.png',
-        'color' => '#FFEAA7'
-    ],
-    'ibedc' => [
-        'name' => 'IBEDC',
-        'full_name' => 'Ibadan Electricity Distribution Company',
-        'logo' => '../../images/ibedc.png',
-        'color' => '#DDA0DD'
-    ],
-    'eedc' => [
-        'name' => 'EEDC',
-        'full_name' => 'Enugu Electricity Distribution Company',
-        'logo' => '../../images/eedc.png',
-        'color' => '#98D8C8'
-    ],
-    'phedc' => [
-        'name' => 'PHEDC',
-        'full_name' => 'Port Harcourt Electricity Distribution Company',
-        'logo' => '../../images/phedc.png',
-        'color' => '#F7DC6F'
-    ],
-    'jedc' => [
-        'name' => 'JEDC',
-        'full_name' => 'Jos Electricity Distribution Company',
-        'logo' => '../../images/jedc.png',
-        'color' => '#BB8FCE'
-    ],
-    'yedc' => [
-        'name' => 'YEDC',
-        'full_name' => 'Yola Electricity Distribution Company',
-        'logo' => '../../images/yedc.png',
-        'color' => '#85C1E9'
-    ],
-    'bedc' => [
-        'name' => 'BEDC',
-        'full_name' => 'Benin Electricity Distribution Company',
-        'logo' => '../../images/bedc.png',
-        'color' => '#F8C471'
-    ]
-];
+if (!isset($_SESSION['atpay_auth_token_key'])) {
+    header("Location: ../Auth/login");
+    exit();
+}
 
-// Function to validate meter number
+// API URL for Disco list
+$api_url = "https://atpay.ng/List/electricity/";
+
+// Fetch Discos from API
+$ch = curl_init($api_url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+curl_close($ch);
+
+$data = json_decode($response, true);
+
+// Build networks array dynamically
+
+$networks = [];
+if ($data && isset($data['Disco'])) {
+    foreach ($data['Disco'] as $disco) {
+        $id   = strtolower($disco['DiscoId']);
+        $name = $disco['DiscoName'];
+
+        $networks[$id] = [
+            'name'      => strtoupper($name),
+            'full_name' => $name,
+            'logo'      => "../../images/" . $id . ".png", // fallback, use your own naming convention
+            'color'     => "#45B7D1" // default color (you can assign custom colors if needed)
+        ];
+    }
+}
+
+// ✅ Function to validate meter number
 function validateMeterNumber($meter) {
-    // Remove any spaces or special characters
     $meter = preg_replace('/[^0-9]/', '', $meter);
-    
-    // Check if it's between 8-13 digits (typical meter number range)
-    if (strlen($meter) >= 8 && strlen($meter) <= 13) {
-        return $meter;
-    }
-    
-    return false;
+    return (strlen($meter) >= 8 && strlen($meter) <= 13) ? $meter : false;
 }
 
-// Function to validate phone number
+// ✅ Function to validate phone number
 function validatePhoneNumber($phone) {
-    // Remove any spaces or special characters
     $phone = preg_replace('/[^0-9]/', '', $phone);
-    
-    // Check if it's 11 digits and starts with 0
-    if (strlen($phone) == 11 && substr($phone, 0, 1) == '0') {
-        return $phone;
-    }
-    
-    // Check if it's 10 digits (without leading 0)
-    if (strlen($phone) == 10) {
-        return '0' . $phone;
-    }
-    
+    if (strlen($phone) == 11 && substr($phone, 0, 1) == '0') return $phone;
+    if (strlen($phone) == 10) return '0' . $phone;
     return false;
 }
 
-// Handle AJAX requests
+// ✅ Handle AJAX requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     header('Content-Type: application/json');
-    
+
     switch ($_POST['action']) {
         case 'verify_meter':
-            $network = $_POST['network'] ?? '';
-            $meter = $_POST['meter_number'] ?? '';
+            $network     = $_POST['network'] ?? '';
+            $meter       = $_POST['meter_number'] ?? '';
             $paymentType = $_POST['payment_type'] ?? '';
-            
+
             if (!validateMeterNumber($meter)) {
                 echo json_encode(['success' => false, 'message' => 'Invalid meter number']);
                 exit;
             }
-            
-            // Simulate meter verification (in real app, call DISCO API)
+
+            // Simulated verification (replace with real API call later)
             $customerInfo = [
-                'name' => 'John Doe Customer',
-                'address' => '123 Sample Street, Lagos',
-                'meter_type' => ucfirst($paymentType),
+                'name'                => 'John Doe Customer',
+                'address'             => '123 Sample Street, Lagos',
+                'meter_type'          => ucfirst($paymentType),
                 'outstanding_balance' => $paymentType === 'postpaid' ? rand(1000, 5000) : 0
             ];
-            
-            echo json_encode([
-                'success' => true, 
-                'customer_info' => $customerInfo
-            ]);
+
+            echo json_encode(['success' => true, 'customer_info' => $customerInfo]);
             exit;
-            
+
         case 'purchase_electricity':
-            $network = $_POST['network'] ?? '';
+            $network     = $_POST['network'] ?? '';
             $paymentType = $_POST['payment_type'] ?? '';
-            $meter = $_POST['meter_number'] ?? '';
-            $amount = $_POST['amount'] ?? '';
-            $phone = $_POST['phone_number'] ?? '';
-            
-            // Validate inputs
+            $meter       = $_POST['meter_number'] ?? '';
+            $amount      = $_POST['amount'] ?? '';
+            $phone       = $_POST['phone_number'] ?? '';
+
             if (!validateMeterNumber($meter)) {
                 echo json_encode(['success' => false, 'message' => 'Invalid meter number']);
                 exit;
             }
-            
             if (!validatePhoneNumber($phone)) {
                 echo json_encode(['success' => false, 'message' => 'Invalid phone number']);
                 exit;
             }
-            
             if (!is_numeric($amount) || $amount < 100) {
                 echo json_encode(['success' => false, 'message' => 'Minimum amount is ₦100']);
                 exit;
             }
-            
-            // Generate transaction ID
+
             $transactionId = 'ELE' . time() . rand(1000, 9999);
-            
-            // Store transaction in session (in real app, store in database)
+
             if (!isset($_SESSION['electricity_history'])) {
                 $_SESSION['electricity_history'] = [];
             }
-            
+
             $_SESSION['electricity_history'][] = [
-                'id' => $transactionId,
-                'network' => $network,
-                'payment_type' => $paymentType,
-                'meter_number' => $meter,
-                'amount' => $amount,
-                'phone_number' => $phone,
-                'date' => date('Y-m-d H:i:s'),
-                'status' => 'successful',
-                'token' => $paymentType === 'prepaid' ? rand(1000000000000000, 9999999999999999) : null
+                'id'            => $transactionId,
+                'network'       => $network,
+                'payment_type'  => $paymentType,
+                'meter_number'  => $meter,
+                'amount'        => $amount,
+                'phone_number'  => $phone,
+                'date'          => date('Y-m-d H:i:s'),
+                'status'        => 'successful',
+                'token'         => $paymentType === 'prepaid' ? rand(1000000000000000, 9999999999999999) : null
             ];
-            
+
             $response = [
-                'success' => true,
-                'message' => 'Electricity payment successful',
+                'success'        => true,
+                'message'        => 'Electricity payment successful',
                 'transaction_id' => $transactionId
             ];
-            
+
             if ($paymentType === 'prepaid') {
                 $response['token'] = $_SESSION['electricity_history'][count($_SESSION['electricity_history']) - 1]['token'];
             }
-            
+
             echo json_encode($response);
             exit;
     }
 }
 
-// Get transaction history
+// ✅ Get transaction history
 function getTransactionHistory() {
     return $_SESSION['electricity_history'] ?? [];
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

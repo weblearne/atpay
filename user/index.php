@@ -8,21 +8,32 @@ if (!isset($_SESSION['atpay_auth_token_key'])) {
     exit();
 }
 
+$response = "";
+
 // Fetch user info function
 function fetchUserInfo($token) {
-    $apiUrl = "https://atpay.ng/api/user/";
-
-    $ch = curl_init($apiUrl);
+    $endpoint = "https://atpay.ng/api/user/";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $endpoint);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Content-Type: application/json",
         "Authorization: Token $token"
     ]);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "{}");
+
+    // Explicitly set the request method
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+
+    // If API needs POST body (even if empty)
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([]));
 
     $result = curl_exec($ch);
-    curl_close($ch);
+
+    if (curl_errno($ch)) {
+        echo "cURL Error: " . curl_error($ch);
+    }
+
+    curl_close($ch); 
 
     return json_decode($result, true);
 }
@@ -32,15 +43,25 @@ $response = fetchUserInfo($_SESSION['atpay_auth_token_key']);
 
 // Check API response
 if (isset($response['error']) && $response['error'] === false) {
-    $user_balance       = number_format($response['Balance'] ?? '0', 2);
-    $account_number = $response['account_number'] ?? "N/A";
-    $account_name   = $response['account_name'] ?? "N/A";
-    $bank_name       = $response['bank_name'] ?? "N/A";
+    // Wallet info
+    $wallet = $response['wallets'][0] ?? [];
+    $user_balance   = $wallet['AccountBalance'] ?? "N0.0";
+    $user_bonus     = $wallet['AccountBonus'] ?? "N0.0";
+    $user_debt      = $wallet['AccountDeft'] ?? "N0.0";
+
+    // Accounts (first one as default)
+    $account = $response['accounts'][0] ?? [];
+    $bank_name      = $account['BnakName'] ?? "N/A";
+    $account_name   = $account['AccName'] ?? "N/A";
+    $account_number = $account['AccNumber'] ?? "N/A";
+
 } else {
-    $user_balance       = "0.00";
-    $account_number = "N/A";
+    $user_balance   = "N0.0";
+    $user_bonus     = "N0.0";
+    $user_debt      = "N0.0";
+    $bank_name      = "N/A";
     $account_name   = "N/A";
-    $bank_name       = "N/A";
+    $account_number = "N/A";
 
     // If token invalid, logout
     if (isset($response['message']) && stripos($response['message'], 'unauthorized') !== false) {
@@ -76,18 +97,34 @@ include 'user_top_nav_bar.php';
       <h3>Fund Your Wallet</h3>
       <button class="close" onclick="toggleBalanceModal()">&times;</button>
     </div>
-    <div class="account-item">
-      <strong>Bank Transfer</strong><br>
-      <small>Account: <?php echo $account_number; ?></small><br>
-       <small>accountName: <?php echo $account_name; ?></small><br>
-      <small>Bank: <?php echo $bank_name; ?></small>
-    </div>
-    <div class="account-item">
-      <strong>USSD</strong><br>
-      <small>not available</small>
+    
+    <div class="account-container">
+      <?php if (!empty($response['accounts'])): ?>
+        <div class="bank-accounts">
+          <?php foreach ($response['accounts'] as $acc): ?>
+            <div class="account-item">
+              <strong>Bank Transfer</strong><br>
+              <small>Account: <?php echo htmlspecialchars($acc['AccNumber']); ?></small><br>
+              <small>Account Name: <?php echo htmlspecialchars($acc['AccName']); ?></small><br>
+              <small>Bank: <?php echo htmlspecialchars($acc['BnakName']); ?></small>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?>
+        <div class="account-item">
+          <strong>No Bank Accounts Available</strong>
+        </div>
+      <?php endif; ?>
+      
+      <!-- div class="account-item ussd-section">
+        <strong>USSD</strong><br>
+        <small>not available</small>
+      </div> -->
     </div>
   </div>
 </div>
+
+
 <br>
 <!-- Banner Slider -->
 <div class="relative overflow-hidden">
@@ -224,7 +261,77 @@ include 'user_top_nav_bar.php';
 <!-- Scripts -->
 <script>
    // Balance Modal Functions
+function toggleBalanceModal() {
+  const modal = document.getElementById('balanceModal');
   
+  if (modal.style.display === 'block' || modal.classList.contains('show')) {
+    // Hide modal
+    modal.classList.remove('show');
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 300); // Wait for animation to complete
+  } else {
+    // Show modal
+    modal.style.display = 'block';
+    setTimeout(() => {
+      modal.classList.add('show');
+    }, 10); // Small delay to trigger animation
+    
+    // Ensure modal content is properly positioned
+    adjustModalPosition();
+  }
+}
+
+function adjustModalPosition() {
+  const modal = document.getElementById('balanceModal');
+  const modalContent = modal.querySelector('.modal-content');
+  
+  // Reset any inline styles that might interfere
+  modalContent.style.marginTop = '';
+  
+  // Calculate proper positioning
+  const viewportHeight = window.innerHeight;
+  const modalHeight = modalContent.offsetHeight;
+  
+  // If modal is taller than viewport, position at top with scroll
+  if (modalHeight > viewportHeight * 0.9) {
+    modalContent.style.top = '5%';
+    modalContent.style.transform = 'translateY(0)';
+    modalContent.style.maxHeight = '90vh';
+  } else {
+    // Center the modal vertically
+    modalContent.style.top = '50%';
+    modalContent.style.transform = 'translateY(-50%)';
+  }
+}
+
+// Close modal when clicking outside of it
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('balanceModal');
+  const modalContent = modal.querySelector('.modal-content');
+  
+  if (event.target === modal) {
+    toggleBalanceModal();
+  }
+});
+
+// Handle window resize to adjust modal position
+window.addEventListener('resize', function() {
+  const modal = document.getElementById('balanceModal');
+  if (modal.style.display === 'block' || modal.classList.contains('show')) {
+    adjustModalPosition();
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    const modal = document.getElementById('balanceModal');
+    if (modal.style.display === 'block' || modal.classList.contains('show')) {
+      toggleBalanceModal();
+    }
+  }
+});
 
         // Banner Slider
     const slider = document.getElementById('banner-slider');
