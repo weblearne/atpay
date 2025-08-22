@@ -179,7 +179,7 @@
 
         /* Main Content */
         .main-content {
-            padding: 1rem;
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
             padding-bottom: 100px;
@@ -190,7 +190,7 @@
             background: linear-gradient(135deg, var(--primary-color), #6366f1);
             color: var(--secondary-color);
             padding: 2rem;
-            border-radius: 1rem;
+/*            border-radius: 0rem;*/
             margin-bottom: 2rem;
             text-align: center;
             position: relative;
@@ -227,6 +227,7 @@
             grid-template-columns: repeat(2, 1fr); /* Default for small screens */
             gap: 1rem;
             margin-bottom: 2rem;
+            margin: 3rem;
         }
 
         @media (min-width: 768px) {

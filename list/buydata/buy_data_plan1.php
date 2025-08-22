@@ -485,31 +485,7 @@ if (isset($data['Plans']) && is_array($data['Plans'])) {
     </style>
 </head>
 <body>
-    <div class="header">
-        <button class="menu-toggle" aria-label="Toggle Sidebar" aria-expanded="false" onclick="toggleSidebar()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <div class="logo-container">
-            <img src="LOGO.JPG" alt="mng data logo" style="width: clamp(32px, 8vw, 40px); height: clamp(32px, 8vw, 40px); border-radius: 50px;">
-            <div class="logo-text"><a href="user.php" class="logo-text">MNG DATA API</a></div>
-        </div>
-    </div>
-
-    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
-
-    <div class="sidebar" id="sidebar">
-        <nav class="nav-menu">
-            <button class="nav-item"><i class="fas fa-tachometer-alt"></i> <a href="user.php">Dashboard</a></button>
-            <button class="nav-item active"><i class="fas fa-star"></i> <a href="plans.php">Plans</a></button>
-            <button class="nav-item"><i class="fas fa-sliders-h"></i> <a href="profile.php">Settings</a></button>
-            <button class="nav-item"><i class="fas fa-credit-card"></i> <a href="transactions.php">Transactions</a></button>
-            <button class="nav-item"><i class="fas fa-book"></i> <a href="documentation.php">Documentation</a></button>
-            <button class="nav-item"><i class="fas fa-user"></i> <a href="profile.php">Profile</a></button>
-        </nav>
-        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-    </div>
+    
 
     <main class="main-content">
         <div class="networks-section">

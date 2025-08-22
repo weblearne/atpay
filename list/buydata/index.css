@@ -1,13 +1,16 @@
-  :root {
+:root {
             --primary-color: #4c1d95;
             --secondary-color: #ffffff;
+            --accent-color: #6366f1;
+            --success-color: #10b981;
+            --error-color: #ef4444;
             --text-primary: #1f2937;
             --text-secondary: #6b7280;
             --border-color: #e5e7eb;
             --hover-bg: #f3f4f6;
+            --offwhite-color: #f8f8f8;
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --success-color: #10b981;
-            --error-color: #ef4444;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -17,405 +20,374 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--secondary-color);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--offwhite-color);
             color: var(--text-primary);
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Top Navigation */
-        .top-nav {
-            background-color: var(--secondary-color);
-            padding: 1rem;
+        .header {
+            background: var(--secondary-color);
             box-shadow: var(--shadow);
+            padding: 0 clamp(12px, 3vw, 20px);
+            height: 70px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            right: 0;
+            z-index: 1000;
         }
 
-        .nav-left {
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 12px;
+            flex: 1;
         }
 
-        .back-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-primary);
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s;
-        }
-
-        .back-btn:hover {
-            background-color: var(--hover-bg);
-        }
-
-        .page-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .history-btn {
-            background: none;
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .history-btn:hover {
-            background-color: var(--hover-bg);
-            border-color: var(--primary-color);
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        /* Section Styling */
-        .section {
-            background-color: var(--secondary-color);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .section-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        /* Network Selection */
-        .network-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-        }
-
-        .network-card {
-            border: 2px solid var(--border-color);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-color: var(--secondary-color);
-        }
-
-        .network-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .network-card.selected {
-            border-color: var(--primary-color);
-            background-color: var(--secondary-color);
-        }
-
-        .network-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin: 0 auto 0.5rem;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            background-color: var(--hover-bg);
+            color: var(--secondary-color);
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        .network-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-
-        .network-name {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        /* Phone Number Input */
-        .phone-section {
-            background-color: var(--secondary-color);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .phone-fieldset {
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            position: relative;
-        }
-
-        .phone-legend {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            padding: 0 0.5rem;
-            background-color: var(--secondary-color);
-        }
-
-        .phone-input {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            padding: 0.5rem 0;
-            background-color: transparent;
-        }
-
-        .phone-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        /* Plan Type Selection */
-        .plan-type-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .plan-type-card {
-            border: 2px solid var(--border-color);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-color: var(--secondary-color);
-        }
-
-        .plan-type-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .plan-type-card.selected {
-            border-color: var(--primary-color);
-            background-color: var(--secondary-color);
-        }
-
-        .plan-type-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .plan-type-desc {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        /* Data Plans */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .plan-card {
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            background-color: var(--secondary-color);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .plan-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .plan-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .plan-name {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            background-color: var(--hover-bg);
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-        }
-
-        .plan-size {
-            font-size: 1.25rem;
+        .logo-text {
+            font-size: clamp(16px, 4vw, 20px);
             font-weight: 700;
             color: var(--primary-color);
+            text-decoration: none;
         }
 
-        .plan-details {
+        .header-actions {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
 
-        .plan-price {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .plan-validity {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .no-selection {
-            text-align: center;
-            color: var(--text-secondary);
-            font-style: italic;
-            padding: 2rem;
-        }
-
-        /* Purchase Button */
-        .purchase-btn {
-            background-color: var(--primary-color);
+        .profile-btn {
+            background: var(--accent-color);
             color: var(--secondary-color);
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
+            border-radius: 8px;
+            padding: 8px 16px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .purchase-btn:hover {
-            background-color: #3730a3;
-            transform: translateY(-1px);
-        }
-
-        .purchase-btn:disabled {
-            background-color: var(--text-secondary);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
+            font-size: 14px;
             font-weight: 500;
-        }
-
-        .alert-success {
-            background-color: #d1fae5;
-            color: #065f46;
-            border: 1px solid #10b981;
-        }
-
-        .alert-error {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #ef4444;
-        }
-
-        /* Loading State */
-        .loading {
-            display: inline-flex;
+            transition: var(--transition);
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
+        }
+
+        .profile-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .main-content {
+            margin-top: 70px;
+            padding: clamp(20px, 5vw, 32px);
+            flex: 1;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: clamp(32px, 6vw, 48px);
+            margin-top: -50px;
+        }
+
+        .page-title {
+            font-size: clamp(24px, 6vw, 36px);
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .page-subtitle {
+            font-size: clamp(14px, 3.5vw, 18px);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .networks-section {
+            margin-bottom: clamp(24px, 5vw, 32px);
+        }
+
+        .section-title {
+            font-size: clamp(18px, 4.5vw, 24px);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--accent-color);
+        }
+
+        /* REMOVE these existing rules completely: */
+/*
+.network-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: clamp(12px, 2.5vw, 16px);
+    margin-bottom: 32px;
+}
+*/
+.network-tabs {
+  display: flex;
+  justify-content: space-between; /* space tabs evenly */
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.network-tab {
+  flex: 1;  /* makes all tabs equal width */
+  text-align: center;
+  padding: 10px 12px;
+  text-decoration: none;
+  background:var(--text-secondary);
+  border-radius: 6px;
+  color: var(--secondary-color);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.network-tab:hover {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.network-tab.active {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+
+     /* Adjust the grid template for the plans-container to allow smaller cards */
+.plans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Reduced min width from 280px to 200px */
+    gap: clamp(12px, 3vw, 16px); /* Reduced gap for tighter spacing */
+    opacity: 0;
+    transform: translateY(20px); /* Slightly reduced animation transform */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+        .plans-container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+     /* Adjust the plan-card size and internal spacing */
+.plan-card {
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px; /* Slightly smaller border-radius */
+    padding: clamp(12px, 3vw, 16px); /* Reduced padding */
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+        }
+
+       /* Adjust plan-header for smaller layout */
+.plan-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px; /* Reduced margin */
+}
+
+       /* Smaller plan icon */
+.plan-icon {
+    width: 36px; /* Reduced from 48px */
+    height: 36px; /* Reduced from 48px */
+    background: var(--accent-color);
+    border-radius: 8px; /* Smaller border-radius */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-size: 16px; /* Reduced font size */
+}
+
+        /* Smaller plan badge */
+.plan-badge {
+    background: var(--success-color);
+    color: var(--secondary-color);
+    padding: 3px 8px; /* Reduced padding */
+    border-radius: 16px; /* Slightly smaller */
+    font-size: 10px; /* Smaller font */
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+      /* Smaller plan name */
+.plan-name {
+    font-size: clamp(14px, 3.5vw, 16px); /* Reduced font size */
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 6px; /* Reduced margin */
+}
+/* Smaller plan price */
+.plan-price {
+    font-size: clamp(16px, 4vw, 20px); /* Reduced font size */
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 8px; /* Reduced margin */
+}
+
+/* Adjust plan details */
+.plan-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* Reduced gap */
+}
+
+/* Smaller plan detail text */
+.plan-detail {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Reduced gap */
+    font-size: clamp(12px, 2.5vw, 13px); /* Smaller font */
+    color: var(--text-secondary);
+}
+
+.plan-detail i {
+    color: var(--text-primary);
+    width: 14px; /* Reduced icon size */
+}
+
+        /* Smaller plan validity section */
+.plan-validity {
+    background: var(--offwhite-color);
+    border-radius: 6px; /* Smaller border-radius */
+    padding: 6px 8px; /* Reduced padding */
+    margin-top: 12px; /* Reduced margin */
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: clamp(12px, 2.5vw, 13px); /* Smaller font */
+    border: 1px solid var(--border-color);
+}
+
+.buy-btn {
+            width: 100%;
+            background: var(--gradient);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 7px;
+            padding: 16px 24px;
+            font-size: clamp(14px, 3vw, 16px);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: clamp(40px, 8vw, 80px);
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: clamp(48px, 10vw, 64px);
+            color: var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: clamp(18px, 4vw, 24px);
+            margin-bottom: 8px;
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
         }
 
         .spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+      /* Adjust responsive design for smaller screens */
+@media (max-width: 768px) {
+    .plans-container {
+        grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0.75rem;
-            }
+    .plan-card {
+        padding: 12px; /* Further reduced padding */
+    }
+}
 
-            .section {
-                padding: 1rem;
-                margin-bottom: 1rem;
-            }
+@media (max-width: 480px) {
+    .plans-container {
+        grid-template-columns: 1fr;
+        gap: 8px; /* Smaller gap */
+    }
 
-            .network-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.75rem;
-            }
+    .plan-card {
+        padding: 10px; /* Even smaller padding */
+    }
 
-            .plans-grid {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
+    .plan-name {
+        font-size: 14px; /* Smaller font for mobile */
+    }
 
-            .plan-type-grid {
-                gap: 0.75rem;
-            }
-
-            .top-nav {
-                padding: 0.75rem;
-            }
-
-            .page-title {
-                font-size: 1.125rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .network-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
-            }
-
-            .network-card {
-                padding: 0.75rem;
-            }
-
-            .network-logo {
-                width: 50px;
-                height: 50px;
-            }
-
-            .plan-type-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    .plan-price {
+        font-size: 16px; /* Smaller font for mobile */
+    }
+}

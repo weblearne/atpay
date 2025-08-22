@@ -222,3 +222,15 @@
                 font-size: 0.7rem;
             }
         }
+        .status-success {
+    color: green;
+    font-weight: bold;
+}
+.status-failed {
+    color: red;
+    font-weight: bold;
+}
+.transaction-desc {
+    font-size: 12px;
+    color: #777;
+}

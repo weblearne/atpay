@@ -1,127 +1,156 @@
-   <?php
-    // session_start();
+<?php
+session_start();
+if (!isset($_SESSION['atpay_auth_token_key'])) {
+    header("Location:../../Auth/login/");
+    exit();
+}
+// Network configurations (same as provided in buy data page)
+$networks = [
+    'mtn' => [
+        'name' => 'MTN',
+        'logo' => '../../images/mtn.png',
+        'color' => '#FFD700'
+    ],
+    'glo' => [
+        'name' => 'Glo',
+        'logo' => '../../images/glo.jpg',
+        'color' => '#00A651'
+    ],
+    '9mobile' => [
+        'name' => '9mobile',
+        'logo' => '../../images/9mobile.jpg',
+        'color' => '#00843D'
+    ],
+    'airtel' => [
+        'name' => 'Airtel',
+        'logo' => '../../images/airtel.jpg',
+        'color' => '#FF0000'
+    ]
+];
 
-    // Network configurations (same as provided in buy data page)
-    $networks = [
-        'mtn' => [
-            'name' => 'MTN',
-            'logo' => '../../images/mtn.png',
-            'color' => '#FFD700'
-        ],
-        'glo' => [
-            'name' => 'Glo',
-            'logo' => '../../images/glo.jpg',
-            'color' => '#00A651'
-        ],
-        '9mobile' => [
-            'name' => '9mobile',
-            'logo' => '../../images/9mobile.jpg',
-            'color' => '#00843D'
-        ],
-        'airtel' => [
-            'name' => 'Airtel',
-            'logo' => '../../images/airtel.jpg',
-            'color' => '#FF0000'
-        ]
-    ];
+// Quick amounts
+$quick_amounts = [100, 500, 700, 1000, 1500, 2000];
 
-    // Quick amounts
-    $quick_amounts = [100, 500, 700, 1000, 1500, 2000];
-
-    // Function to validate phone number (same as buy data page)
-    function validatePhoneNumber($phone) {
-        $phone = preg_replace('/[^0-9]/', '', $phone);
-        if (strlen($phone) == 11 && substr($phone, 0, 1) == '0') {
-            return $phone;
-        }
-        if (strlen($phone) == 10) {
-            return '0' . $phone;
-        }
-        return false;
+// Function to validate phone number (same as buy data page)
+function validatePhoneNumber($phone) {
+    $phone = preg_replace('/[^0-9]/', '', $phone);
+    if (strlen($phone) == 11 && substr($phone, 0, 1) == '0') {
+        return $phone;
     }
-
-    // Function to get network from phone number (same as buy data page)
-    function getNetworkFromPhone($phone) {
-        $phone = validatePhoneNumber($phone);
-        if (!$phone) return false;
-        
-        $prefix = substr($phone, 0, 4);
-        
-        if (in_array($prefix, ['0803', '0806', '0813', '0810', '0814', '0816', '0903', '0906', '0913', '0916'])) {
-            return 'mtn';
-        }
-        if (in_array($prefix, ['0805', '0807', '0811', '0815', '0905', '0915'])) {
-            return 'glo';
-        }
-        if (in_array($prefix, ['0809', '0817', '0818', '0908', '0909'])) {
-            return '9mobile';
-        }
-        if (in_array($prefix, ['0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912'])) {
-            return 'airtel';
-        }
-        return false;
+    if (strlen($phone) == 10) {
+        return '0' . $phone;
     }
+    return false;
+}
 
-    // Handle AJAX requests
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
-        header('Content-Type: application/json');
-        
-        switch ($_POST['action']) {
-            case 'detect_network':
-                $phone = $_POST['phone'] ?? '';
-                $detectedNetwork = getNetworkFromPhone($phone);
-                
-                if ($detectedNetwork) {
-                    echo json_encode(['success' => true, 'network' => $detectedNetwork]);
-                } else {
-                    echo json_encode(['success' => false, 'message' => 'Could not detect network']);
-                }
+// Function to get network from phone number (same as buy data page)
+function getNetworkFromPhone($phone) {
+    $phone = validatePhoneNumber($phone);
+    if (!$phone) return false;
+    
+    $prefix = substr($phone, 0, 4);
+    
+    if (in_array($prefix, ['0803','0806','0813','0810','0814','0816','0903','0906','0913','0916'])) {
+        return 'mtn';
+    }
+    if (in_array($prefix, ['0805','0807','0811','0815','0905','0915'])) {
+        return 'glo';
+    }
+    if (in_array($prefix, ['0809','0817','0818','0908','0909'])) {
+        return '9mobile';
+    }
+    if (in_array($prefix, ['0802','0808','0812','0901','0902','0904','0907','0912'])) {
+        return 'airtel';
+    }
+    return false;
+}
+
+// Handle AJAX requests
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
+    header('Content-Type: application/json');
+    
+    switch ($_POST['action']) {
+        case 'detect_network':
+            $phone = $_POST['phone'] ?? '';
+            $detectedNetwork = getNetworkFromPhone($phone);
+            
+            if ($detectedNetwork) {
+                echo json_encode(['success' => true, 'network' => $detectedNetwork]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Could not detect network']);
+            }
+            exit;
+            
+        case 'purchase_airtime':
+            $phone   = $_POST['phone'] ?? '';
+            $network = $_POST['network'] ?? '';
+            $amount  = $_POST['amount'] ?? '';
+            
+            if (!validatePhoneNumber($phone)) {
+                echo json_encode(['success' => false, 'message' => 'Invalid phone number']);
                 exit;
-                
-            case 'purchase_airtime':
-                $phone = $_POST['phone'] ?? '';
-                $network = $_POST['network'] ?? '';
-                $amount = $_POST['amount'] ?? '';
-                
-                if (!validatePhoneNumber($phone)) {
-                    echo json_encode(['success' => false, 'message' => 'Invalid phone number']);
-                    exit;
-                }
-                
-                if (!is_numeric($amount) || $amount < 50) {
-                    echo json_encode(['success' => false, 'message' => 'Invalid amount. Minimum is ₦50']);
-                    exit;
-                }
-                
-                if (!isset($networks[$network])) {
-                    echo json_encode(['success' => false, 'message' => 'Invalid network']);
-                    exit;
-                }
-                
-                $purchaseId = 'ATXN' . time() . rand(1000, 9999);
-                
-                if (!isset($_SESSION['airtime_purchases'])) {
-                    $_SESSION['airtime_purchases'] = [];
-                }
-                
-                $_SESSION['airtime_purchases'][] = [
-                    'id' => $purchaseId,
-                    'phone' => $phone,
-                    'network' => $network,
-                    'amount' => $amount,
-                    'date' => date('Y-m-d H:i:s'),
-                    'status' => 'successful'
-                ];
-                
-                echo json_encode([
-                    'success' => true,
-                    'message' => 'Airtime purchase successful',
-                    'transaction_id' => $purchaseId
-                ]);
+            }
+            
+            if (!is_numeric($amount) || $amount < 50) {
+                echo json_encode(['success' => false, 'message' => 'Invalid amount. Minimum is ₦50']);
                 exit;
-        }
+            }
+            
+            if (!isset($networks[$network])) {
+                echo json_encode(['success' => false, 'message' => 'Invalid network']);
+                exit;
+            }
+
+            // ✅ Real API Call
+            $url = "https://www.atpay.ng/api/airtime/";
+           $token = $_SESSION['atpay_auth_token_key'];
+
+
+            $postData = [
+                'network' => $network,   // network code (mtn, glo, airtel, 9mobile)
+                'phone'   => $phone,
+                'amount'  => $amount
+            ];
+
+            $ch = curl_init();
+            curl_setopt_array($ch, [
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => http_build_query($postData),
+                CURLOPT_HTTPHEADER => [
+                    "Authorization: Bearer $token",
+                    "Content-Type: application/x-www-form-urlencoded"
+                ],
+            ]);
+            $response = curl_exec($ch);
+            $err = curl_error($ch);
+            curl_close($ch);
+
+            if ($err) {
+    echo json_encode(['success' => false, 'message' => 'Connection error. Try again.']);
+    exit;
+}
+
+$result = json_decode($response, true);
+
+if (isset($result['success']) && $result['success'] == true) {
+    echo json_encode([
+        'success' => true,
+        'message' => 'Airtime purchase successful',
+        'transaction_id' => $result['transaction_id'] ?? 'ATXN'.time()
+    ]);
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => $result['message'] ?? 'Purchase failed. Please try again.'
+    ]);
+}
+exit;
+
     }
-    ?>
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -335,17 +364,24 @@
             });
         }
 
-        // Show alert message
-        function showAlert(message, type) {
-            const alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.textContent = message;
-            alertContainer.appendChild(alert);
-            
-            setTimeout(() => {
-                alert.remove();
-            }, 5000);
-        }
+      function showAlert(message, type) {
+    if (type === 'success') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Airtime Purchased',
+            text: message,
+            confirmButtonColor: '#3085d6'
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Transaction Failed',
+            text: message,
+            confirmButtonColor: '#d33'
+        });
+    }
+}
+
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {

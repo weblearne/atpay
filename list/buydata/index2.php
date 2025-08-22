@@ -1,10 +1,6 @@
 <?php
 // ---------------- Fetch Plans from API ----------------
 session_start();
-if (!isset($_SESSION['atpay_auth_token_key'])) {
-    header("Location:../../Auth/login/");
-    exit();
-}
 $planId = $_POST['planId'] ?? 0;
 $PlanName = $_POST['PlanName'] ?? '';
 $User = $_POST['User'] ?? '';
@@ -27,11 +23,6 @@ function fetchPlans($token, $payload) {
 
     $response = curl_exec($ch);
 
-        // echo "<pre>";
-        // print_r($response);
-        // echo "</pre>";
-        // exit;
-
     if (curl_errno($ch)) {
         throw new Exception("cURL error: " . curl_error($ch));
     }
@@ -48,19 +39,8 @@ try {
     $payload = ["NetworkId" => $networkId];
     $result = fetchPlans($token, $payload);
     $plans = $result['plans'] ?? [];
-    $error_ = $result['error'] ?? [];
 
     $message = "";
-
-    if ($error_ == true) {
-        // kill all seeeion 
-        $message = $result['message'] ?? [];
-        include "../../logout.php";
-    }
-
-    // {"error":true,"message":"Authorization token not found"}
-
-    
     $networkNames = ["1" => "MTN", "2" => "Airtel", "3" => "Glo", "4" => "9mobile"];
     $networkName = $networkNames[$networkId] ?? "Unknown";
 } catch (Exception $e) {
@@ -73,7 +53,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>atPay Wallet - Data Plans</title>
+    <title>MNG DATA API - Data Plans</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="index.css">
 </head>
@@ -88,7 +68,7 @@ try {
 
     <div class="networks-section">
         <h2 class="section-title"><i class="fas fa-network-wired"></i> Select Network</h2>
-       <div class="network-tabs">
+        <div class="network-tabs">
             <a href="?network=2" class="network-tab <?= $networkId == 2 ? 'active' : '' ?>">Glo</a>
             <a href="?network=3" class="network-tab <?= $networkId == 3 ? 'active' : '' ?>">9mobile</a>
             <a href="?network=4" class="network-tab <?= $networkId == 4 ? 'active' : '' ?>">Airtel</a>
@@ -108,17 +88,16 @@ try {
         <?php if (!empty($plans)) : ?>
             <?php foreach ($plans as $plan): ?>
                 <div class="plan-card">
-                    <div class="plan-name"><?= htmlspecialchars($plan['PlanName']??'') ?></div>
-                    <div class="plan-price">₦<?= htmlspecialchars($plan['User']??'') ?></div>
+                    <div class="plan-name"><?= htmlspecialchars($plan['PlanName']) ?></div>
+                    <div class="plan-price">₦<?= htmlspecialchars($plan['Price'] ?? 0) ?></div>
                     <div class="plan-validity">Validity: <?= htmlspecialchars($plan['Validity'] ?? 'N/A') ?></div>
 
                     <!-- Buy Now form -->
                     <form method="post" action="buydata/">
                         <input type="hidden" name="planId" value="<?= htmlspecialchars($plan['PlanId']) ?>">
                         <input type="hidden" name="PlanName" value="<?= htmlspecialchars($plan['PlanName']) ?>">
-                        <input type="hidden" name="price" value="<?= htmlspecialchars($plan['User']) ?>">
-                        <input type="hidden" name="networkid" value="<?= htmlspecialchars($plan['NetworkId']) ?>">
-                       
+                        <input type="hidden" name="User" value="<?= htmlspecialchars($User) ?>">
+                        <input type="hidden" name="number" value="<?= htmlspecialchars($number) ?>">
                         <button type="submit" class="buy-btn">Buy Now</button>
                     </form>
                 </div>

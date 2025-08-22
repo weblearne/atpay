@@ -124,19 +124,18 @@ include 'user_top_nav_bar.php';
   </div>
 </div>
 
-
 <br>
 <!-- Banner Slider -->
-<div class="relative overflow-hidden">
-  <div id="banner-slider" class="banner-slider flex transition-transform duration-300">
-    <div class="banner-slide">
-      <img src="../images/bg2.png" alt="Ad Banner 1" class="w-full h-48 object-cover" />
+<div class="relative overflow-hidden" style="border-radius: 0px;">
+  <div id="banner-slider" class="banner-slider flex transition-transform duration-300" style="border-radius: 0px;">
+    <div class="banner-slide" style="border-radius: 0px;">
+      <img src="../images/bg2.png" style="border-radius: 0px;" alt="Ad Banner 1" class="w-full h-48 object-cover" />
     </div>
-    <div class="banner-slide">
-      <img src="../images/atpay.png" alt="Ad Banner 2" class="w-full h-48 object-cover" />
+    <div class="banner-slide" style="border-radius: 0px;">
+      <img src="../images/atpay.png" style="border-radius: 0px;" alt="Ad Banner 2" class="w-full h-48 object-cover" />
     </div>
-    <div class="banner-slide">
-      <img src="../images/bg2.png" alt="Ad Banner 3" class="w-full h-48 object-cover" />
+    <div class="banner-slide" style="border-radius: 0px;">
+      <img src="../images/bg2.png" style="border-radius: 0px;" alt="Ad Banner 3" class="w-full h-48 object-cover" />
     </div>
   </div>
 
@@ -148,7 +147,7 @@ include 'user_top_nav_bar.php';
   </button>
 </div>
 
-<main>
+<main style="margin: 9px;">
   <!-- Other Actions Section -->
   <section>
     <h2 class="section-header">Other Actions</h2>

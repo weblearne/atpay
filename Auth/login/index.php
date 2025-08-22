@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" name="Password" placeholder="Enter your password" required>
-        <a href="#" class="forgot-password">Forgot password?</a>
+        <a href="../forgetpassword/" class="forgot-password">Forgot password?</a>
       </div>
       <button type="submit">Login</button>
       <div class="signup-link" style="text-align:center; margin-top: 10px;">Don't have an account? <a href="../register/">Sign up</a></div>

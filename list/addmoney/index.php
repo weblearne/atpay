@@ -35,11 +35,9 @@ if (isset($response['error']) && $response['error'] === false) {
     $user_balance_raw = floatval(str_replace(["N",","], "", $wallet['AccountBalance'] ?? 0));
     $user_bonus_raw   = floatval(str_replace(["N",","], "", $wallet['AccountBonus'] ?? 0));
 
-    // Accounts (first one as default)
-    $account = $response['accounts'][0] ?? [];
-    $account_number = $account['AccNumber'] ?? "N/A";
-    $bank_name      = $account['BnakName'] ?? "N/A";
-    $account_name   = $account['AccName'] ?? "N/A";
+  // Fetch all accounts
+$accounts = $response['accounts'] ?? [];
+
 
 } else {
     $user_balance_raw = 0;
@@ -106,31 +104,39 @@ $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
                 <div class="balance" id="balance"><?php echo $user_balance; ?></div>
                 <div class="bonus" id="bonus">NGN Bonus:<?php echo $user_bonus; ?></div>
 
-                <div class="account-info">
-                    <div class="account-row">
-                        <span class="account-label">Account Number</span>
-                        <div class="account-value">
-                            <span id="accountNumber"><?php echo $account_number; ?></span>
-                            <button class="copy-btn" onclick="copyToClipboard('<?php echo $account_number; ?>')">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                        </div>
-                    </div>
-                    <div class="account-row">
-                        <span class="account-label">Bank Name</span>
-                        <span class="account-value"><?php echo $bank_name; ?></span>
-                    </div>
-                    <div class="account-row">
-                        <span class="account-label">Account Name</span>
-                        <span class="account-value"><?php echo $account_name; ?></span>
+              <div class="account-info">
+    <?php if (!empty($accounts)): ?>
+        <?php foreach ($accounts as $acc): ?>
+            <div class="account-card">
+                <div class="account-row">
+                    <span class="account-label">Account Number</span>
+                    <div class="account-value">
+                        <span><?php echo $acc['AccNumber'] ?? "N/A"; ?></span>
+                        <button class="copy-btn" onclick="copyToClipboard('<?php echo $acc['AccNumber'] ?? ''; ?>')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
                     </div>
                 </div>
+                <div class="account-row">
+                    <span class="account-label">Bank Name</span>
+                    <span class="account-value"><?php echo $acc['BnakName'] ?? "N/A"; ?></span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">Account Name</span>
+                    <span class="account-value"><?php echo $acc['AccName'] ?? "N/A"; ?></span>
+                </div>
             </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="no-accounts">No accounts found</div>
+    <?php endif; ?>
+</div>
+<br>
 
             <!-- Funding Options -->
             <div class="funding-options">
                 <div class="options-grid">
-                    <a href="/bank-transfer" class="option">
+                    <a href="#" class="option">
                         <div class="option-icon">
                           <i class="fa-solid fa-building-columns"></i>
                         </div>
@@ -140,7 +146,7 @@ $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
                         </div>
                     </a>
 
-                    <a href="/usdt-transfer" class="option">
+                    <a href="#" class="option">
                         <div class="option-icon">
                           <i class="fa-solid fa-hashtag"></i>
                         </div>
@@ -150,7 +156,7 @@ $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
                         </div>
                     </a>
 
-                    <a href="/manual-funding" class="option">
+                    <a href="#" class="option">
                         <div class="option-icon">
                             <i class="fas fa-hand-holding-usd"></i>
                         </div>
@@ -160,7 +166,7 @@ $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
                         </div>
                     </a>
 
-                    <a href="/airtime-to-cash" class="option">
+                    <a href="#" class="option">
                         <div class="option-icon">
                             <i class="fas fa-mobile-alt"></i>
                         </div>
@@ -170,7 +176,7 @@ $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
                         </div>
                     </a>
 
-                    <a href="/virtual-account" class="option">
+                    <a href="#" class="option">
                         <div class="option-icon">
                             <i class="fas fa-credit-card"></i>
                         </div>
