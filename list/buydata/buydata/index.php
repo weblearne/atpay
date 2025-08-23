@@ -57,6 +57,8 @@ $network_image = isset($network_images[$networkName]) ? $network_images[$network
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="index.css">
+      <link rel="icon" type="image/png" href="../../../images/logo.png">
+
 </head>
 <body>
   <?php include "../../../include/user_top_navbar.php"; ?>

@@ -1,3 +1,0 @@
-
-
-{"error":true,"message":"Your authorization token is required."}

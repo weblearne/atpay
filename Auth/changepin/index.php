@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="index.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="index.css">
+      <link rel="icon" type="image/png" href="../../images/logo.png">
+
+
 </head>
 <body>
     <?php include '../include/navbar.php'?>

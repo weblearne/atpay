@@ -8,6 +8,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About atPay</title>
+       <link rel="icon" type="image/png" href="../../../images/logo.png">
+
     <style>
         :root {
             --primary-color: #4c1d95;

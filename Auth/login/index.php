@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>atPay Wallet Login</title>
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon">
 </head>
 <body>
   <div class="login-container">

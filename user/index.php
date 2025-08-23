@@ -81,11 +81,13 @@ include 'user_top_nav_bar.php';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard</title>
-
+   <link rel="icon" type="image/png" href="../images/logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous"/>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="user_style.css" />
+   
+
 </head>
 <body>
 
@@ -126,16 +128,22 @@ include 'user_top_nav_bar.php';
 
 
 <!-- Banner Slider -->
-<div class="relative overflow-hidden" style="border-radius: 0px; height:140px;">
-  <div id="banner-slider" class="banner-slider flex transition-transform duration-300" style="border-radius: 0px;">
-    <div class="banner-slide" style="border-radius: 0px;">
-      <img src="../images/bg2.png" style="border-radius: 0px;" alt="Ad Banner 1" class="w-full h-48 object-cover" />
+<div class="relative overflow-hidden" style="border-radius: 0px; height:140px; margin: 3px">
+  <div id="banner-slider" class="banner-slider flex transition-transform duration-300" style="border-radius: 0px; height: 140px;">
+    
+    <div class="banner-slide" style="border-radius: 0px; height:140px;">
+      <img src="../images/bg2.png" alt="Ad Banner 1" class="w-full h-full object-cover" style="border-radius: 0px;" />
     </div>
-    <div class="banner-slide" style="border-radius: 0px;">
-      <img src="../images/atpay.png" style="border-radius: 0px;" alt="Ad Banner 2" class="w-full h-48 object-cover" />
+
+    <!-- Second banner (optional) -->
+    <!--
+    <div class="banner-slide" style="border-radius: 0px; height:140px;">
+      <img src="../images/atpay.png" alt="Ad Banner 2" class="w-full h-full object-cover" style="border-radius: 0px;" />
     </div>
-    <div class="banner-slide" style="border-radius: 0px;">
-      <img src="../images/bg2.png" style="border-radius: 0px;" alt="Ad Banner 3" class="w-full h-48 object-cover" />
+    -->
+
+    <div class="banner-slide" style="border-radius: 0px; height:140px;">
+      <img src="https://atpay.ng/web/control/assets/images/banner833_9014.png" alt="Ad Banner 3" class="w-full h-full object-cover" style="border-radius: 0px;" />
     </div>
   </div>
 
@@ -147,23 +155,24 @@ include 'user_top_nav_bar.php';
   </button>
 </div>
 
+
 <main style="margin: 9px;">
   <!-- Other Actions Section -->
   <section>
-    <h2 class="section-header">Other Actions</h2>
+    <!--<h2 class="section-header">Other Actions</h2>-->
     <div class="grid-4">
       <div class="grid-item" onclick="addMore()" role="button" >
      <i class="fa-solid fa-plus" ></i>
         <div class="grid-item-title">Add Money</div>
       </div>
-      <div class="grid-item" onclick="sendGift()" role="button">
-        <i class="fas fa-gift"></i>
-        <div class="grid-item-title">Send Gift</div>
-      </div>
-      <div class="grid-item" onclick="upgrade()" role="button">
-   <i class="fa-solid fa-arrow-up"></i>
-        <div class="grid-item-title">Upgrade</div>
-      </div>
+      <!--<div class="grid-item" onclick="sendGift()" role="button">-->
+      <!--  <i class="fas fa-gift"></i>-->
+      <!--  <div class="grid-item-title">Send Gift</div>-->
+      <!--</div>-->
+   <!--   <div class="grid-item" onclick="upgrade()" role="button">-->
+   <!--<i class="fa-solid fa-arrow-up"></i>-->
+   <!--     <div class="grid-item-title">Upgrade</div>-->
+   <!--   </div>-->
       <div class="grid-item" onclick="invite()" role="button">
 <i class="fa-solid fa-share-nodes"></i>
         <div class="grid-item-title">Invite</div>
@@ -343,7 +352,7 @@ document.addEventListener('keydown', function(event) {
     function showSlide(index) {
       if (index < 0) index = totalSlides - 1;
       if (index >= totalSlides) index = 0;
-      slider.style.transform = `translateX(-${index * 100}%)`;
+      slider.style.transform = translateX(-${index * 100}%);
       currentSlide = index;
     }
 

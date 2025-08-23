@@ -11,14 +11,16 @@
 <meta property="og:url" content="https://atpay.ng/" />
 <meta property="og:title" content="atPay | Quality Data & Airtime" />
 <meta property="og:description" content="Buy data, airtime, and manage your wallet easily with atPay." />
-<meta property="og:image" content="https://jabyrtech.github.io/portfolio/index.html" /> <!-- Banner for preview -->
+<meta property="og:image" content="https://www.gtopup.site/invite/assets/images/atpay%20new%20logo_write.png" /> <!-- Banner for preview -->
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:card" content="summary" />
 <meta property="twitter:url" content="https://atpay.ng/" />
 <meta property="twitter:title" content="atPay | Quality Data & Airtime" />
 <meta property="twitter:description" content="Buy data, airtime, and manage your wallet easily with atPay." />
-<meta property="twitter:image" content="https://jabyrtech.github.io/portfolio/index.html" /> <!-- Banner for preview -->
+<meta property="twitter:image" content="https://www.gtopup.site/invite/assets/images/atpay%20new%20logo_write.png" /> <!-- Banner for preview -->
+<meta name="twitter:image:width" content="70" />
+  <meta name="twitter:image:height" content="70" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="icon" type="image/png" href="images/logo.png">
@@ -761,8 +763,11 @@
       <!-- <p>Seamless, Fast, Secure & Reliable Payments for Airtime, Data & Bills Making Everyday Transactions Effortless, Anywhere, Anytime!</p> -->
       <p>atPay is a fast and secure platform that allows users to conveniently purchase data, airtime, and other digital services.!</p>
       <div class="buttons">
-        <a href="https://play.google.com/store/apps/details?id=com.data.bluepay&pli=1" class="google-play">Download it on Google Play</a>
-        <a href="#" class="app-store">Download on the App Store</a>
+          <a href="Auth/login/" class="app-store">Login here</a>
+          <a href="Auth/register/" class="app-store">Register Free</a>
+        <a href="https://play.google.com/store/apps/details?id=com.data.bluepay&pli=1" class="google-play" style="background-color: black; color: #fff">Download it on Google Play</a>
+        
+
       </div>
     </section>
 

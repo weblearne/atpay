@@ -68,6 +68,8 @@ $user_bonus   = "NGN " . number_format($user_bonus_raw, 2);
     <title>Add Money - atPay Wallet</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="add_money.css">
+      <link rel="icon" type="image/png" href="../../images/logo.png">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 
 </head>
