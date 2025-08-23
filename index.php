@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" >
+  <title>atPay | Quality Data & Airtime</title>
+<meta name="title" content="atPay | Quality Data & Airtime" />
+<meta name="description" content="Buy data, airtime, and manage your wallet easily with atPay. Fast, reliable, and affordable services at your fingertips." />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://atpay.ng/" />
+<meta property="og:title" content="atPay | Quality Data & Airtime" />
+<meta property="og:description" content="Buy data, airtime, and manage your wallet easily with atPay." />
+<meta property="og:image" content="https://jabyrtech.github.io/portfolio/index.html" /> <!-- Banner for preview -->
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://atpay.ng/" />
+<meta property="twitter:title" content="atPay | Quality Data & Airtime" />
+<meta property="twitter:description" content="Buy data, airtime, and manage your wallet easily with atPay." />
+<meta property="twitter:image" content="https://jabyrtech.github.io/portfolio/index.html" /> <!-- Banner for preview -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>atPay Wallet</title>
+   <link rel="icon" type="image/png" href="images/logo.png">
   <style>
     :root {
       --primary-purple: #4c1d95;

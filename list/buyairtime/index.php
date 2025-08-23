@@ -1,156 +1,88 @@
 <?php
 session_start();
-if (!isset($_SESSION['atpay_auth_token_key'])) {
-    header("Location:../../Auth/login/");
-    exit();
-}
-// Network configurations (same as provided in buy data page)
-$networks = [
-    'mtn' => [
-        'name' => 'MTN',
-        'logo' => '../../images/mtn.png',
-        'color' => '#FFD700'
-    ],
-    'glo' => [
-        'name' => 'Glo',
-        'logo' => '../../images/glo.jpg',
-        'color' => '#00A651'
-    ],
-    '9mobile' => [
-        'name' => '9mobile',
-        'logo' => '../../images/9mobile.jpg',
-        'color' => '#00843D'
-    ],
-    'airtel' => [
-        'name' => 'Airtel',
-        'logo' => '../../images/airtel.jpg',
-        'color' => '#FF0000'
-    ]
-];
 
-// Quick amounts
-$quick_amounts = [100, 500, 700, 1000, 1500, 2000];
-
-// Function to validate phone number (same as buy data page)
-function validatePhoneNumber($phone) {
-    $phone = preg_replace('/[^0-9]/', '', $phone);
-    if (strlen($phone) == 11 && substr($phone, 0, 1) == '0') {
-        return $phone;
-    }
-    if (strlen($phone) == 10) {
-        return '0' . $phone;
-    }
-    return false;
-}
-
-// Function to get network from phone number (same as buy data page)
-function getNetworkFromPhone($phone) {
-    $phone = validatePhoneNumber($phone);
-    if (!$phone) return false;
-    
-    $prefix = substr($phone, 0, 4);
-    
-    if (in_array($prefix, ['0803','0806','0813','0810','0814','0816','0903','0906','0913','0916'])) {
-        return 'mtn';
-    }
-    if (in_array($prefix, ['0805','0807','0811','0815','0905','0915'])) {
-        return 'glo';
-    }
-    if (in_array($prefix, ['0809','0817','0818','0908','0909'])) {
-        return '9mobile';
-    }
-    if (in_array($prefix, ['0802','0808','0812','0901','0902','0904','0907','0912'])) {
-        return 'airtel';
-    }
-    return false;
-}
-
-// Handle AJAX requests
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
-    header('Content-Type: application/json');
-    
-    switch ($_POST['action']) {
-        case 'detect_network':
-            $phone = $_POST['phone'] ?? '';
-            $detectedNetwork = getNetworkFromPhone($phone);
-            
-            if ($detectedNetwork) {
-                echo json_encode(['success' => true, 'network' => $detectedNetwork]);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Could not detect network']);
-            }
-            exit;
-            
-        case 'purchase_airtime':
-            $phone   = $_POST['phone'] ?? '';
-            $network = $_POST['network'] ?? '';
-            $amount  = $_POST['amount'] ?? '';
-            
-            if (!validatePhoneNumber($phone)) {
-                echo json_encode(['success' => false, 'message' => 'Invalid phone number']);
-                exit;
-            }
-            
-            if (!is_numeric($amount) || $amount < 50) {
-                echo json_encode(['success' => false, 'message' => 'Invalid amount. Minimum is ₦50']);
-                exit;
-            }
-            
-            if (!isset($networks[$network])) {
-                echo json_encode(['success' => false, 'message' => 'Invalid network']);
-                exit;
-            }
-
-            // ✅ Real API Call
-            $url = "https://www.atpay.ng/api/airtime/";
-           $token = $_SESSION['atpay_auth_token_key'];
-
-
-            $postData = [
-                'network' => $network,   // network code (mtn, glo, airtel, 9mobile)
-                'phone'   => $phone,
-                'amount'  => $amount
-            ];
-
-            $ch = curl_init();
-            curl_setopt_array($ch, [
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => http_build_query($postData),
-                CURLOPT_HTTPHEADER => [
-                    "Authorization: Bearer $token",
-                    "Content-Type: application/x-www-form-urlencoded"
-                ],
-            ]);
-            $response = curl_exec($ch);
-            $err = curl_error($ch);
-            curl_close($ch);
-
-            if ($err) {
-    echo json_encode(['success' => false, 'message' => 'Connection error. Try again.']);
+// ✅ Validate session token
+if (empty($_SESSION['atpay_auth_token_key'])) {
+    echo json_encode([
+        "status"  => "failed",
+        "message" => "Authentication token is missing. Please log in again."
+    ]);
     exit;
 }
 
-$result = json_decode($response, true);
+$networkId = $_POST['network'] ?? null;
 
-if (isset($result['success']) && $result['success'] == true) {
-    echo json_encode([
-        'success' => true,
-        'message' => 'Airtime purchase successful',
-        'transaction_id' => $result['transaction_id'] ?? 'ATXN'.time()
-    ]);
-} else {
-    echo json_encode([
-        'success' => false,
-        'message' => $result['message'] ?? 'Purchase failed. Please try again.'
-    ]);
-}
-exit;
+$response = null; // Default
 
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // ✅ Read input safely (support both JSON and form POST)
+$networkId = $_POST['network'] ?? null;
+$phone     = $_POST['phone']   ?? null;
+$amount    = $_POST['amount']  ?? null;
+
+
+
+
+
+$payload = [
+    "network"     => $networkId,
+    "PhoneNumber" => $phone,
+    "amount"      => $amount
+];
+
+$token = $_SESSION['atpay_auth_token_key'];
+
+// ✅ Send request to API
+$ch = curl_init("https://www.atpay.ng/api/airtime/");
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => json_encode($payload),
+    CURLOPT_HTTPHEADER     => [
+        "Authorization: Token $token",
+        "Content-Type: application/json",
+    ],
+    CURLOPT_TIMEOUT        => 30,
+]);
+
+$respons = curl_exec($ch);
+
+if (curl_errno($ch)) {
+    echo json_encode([
+        "status"  => "failed",
+        "message" => "cURL Error: " . curl_error($ch)
+    ]);
+    curl_close($ch);
+    exit;
 }
+
+curl_close($ch);
+// echo json_encode($result);
+ /// response = {"error":true,"Status":"Fail","status":"fail","message":"Authorization token not found","msg":"Authorization token not found"}
+
+$result = json_decode($respons, true);
+
+$response = $result;
+
+$get_erro_msg = $result['message']??'';
+if($get_erro_msg =="Authorization token not found"){
+    // kin s
+session_unset();
+session_destroy();
+header("location: ../../Auth/login/");
+ exit();
+
+}
+
+
+}
+
+
+
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -159,6 +91,8 @@ exit;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buy Airtime</title>
 <link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
  
@@ -170,56 +104,64 @@ exit;
     <div class="container">
         <div id="alert-container"></div>
 
-        <!-- Network Selection -->
-        <div class="section">
-            <h2 class="section-title">Select Network</h2>
-            <div class="network-grid">
-                <?php foreach ($networks as $networkKey => $networkData): ?>
-                <div class="network-card" data-network="<?php echo $networkKey; ?>">
-                    <div class="network-logo">
-                        <img src="<?php echo htmlspecialchars($networkData['logo']); ?>" 
-                             alt="<?php echo htmlspecialchars($networkData['name']); ?> Logo"
-                             onerror="this.style.display='none'; this.parentNode.innerHTML='<?php echo strtoupper(substr($networkData['name'], 0, 2)); ?>';">
-                    </div>
-                    <div class="network-name"><?php echo htmlspecialchars($networkData['name']); ?></div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
+       <!-- Networks Dropdown -->
+<!-- <select name="network" required>
+    <option value="">Select Network</option>
 
-        <!-- Phone Number Input -->
-        <div class="phone-section">
-            <fieldset class="phone-fieldset">
-                <legend class="phone-legend">Phone Number</legend>
-                <input type="tel" id="phone-input" class="phone-input" placeholder="Enter phone number" maxlength="11">
-            </fieldset>
-        </div>
+        <option > MTN</option>
+        <option> AIRTEL</option>
+        <option> 9MOBILE</option>
+        <option> GLO</option>
+    
+</select> -->
+    <form action="" method="post">
+    <div class="networks-section">
+        <br>
+        <h2 class="section-title"><i class="fas fa-network-wired"></i> Select Network</h2>
+        <div class="network-tabs">
+            <!-- Hidden field for network -->
+            <input type="hidden" name="network" id="networkInput" value="<?= $networkId ?>">
 
-        <!-- Quick Amount Selection -->
-        <div class="section">
-            <h2 class="section-title">Quick Amount</h2>
-            <div class="quick-amount-grid">
-                <?php foreach ($quick_amounts as $amount): ?>
-                <div class="amount-card" data-amount="<?php echo $amount; ?>">
-                    <div class="amount-value">₦<?php echo number_format($amount); ?></div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
+            <a href="javascript:void(0)" 
+               class="network-tab <?= $networkId == 2 ? 'active' : '' ?>" 
+               onclick="setNetwork(2, this)">Glo</a>
 
-        <!-- Amount Input -->
-        <div class="amount-input-section">
-            <fieldset class="amount-fieldset">
-                <legend class="amount-legend">Amount</legend>
-                <input type="number" id="amount-input" class="amount-input" placeholder="Enter amount (min ₦50)" min="50">
-            </fieldset>
-        </div>
+            <a href="javascript:void(0)" 
+               class="network-tab <?= $networkId == 3 ? 'active' : '' ?>" 
+               onclick="setNetwork(3, this)">9mobile</a>
 
-        <!-- Pay Button -->
-        <div class="section">
-            <button id="pay-btn" class="pay-btn" disabled>Pay</button>
+            <a href="javascript:void(0)" 
+               class="network-tab <?= $networkId == 4 ? 'active' : '' ?>" 
+               onclick="setNetwork(4, this)">Airtel</a>
+
+            <a href="javascript:void(0)" 
+               class="network-tab <?= $networkId == 1 ? 'active' : '' ?>" 
+               onclick="setNetwork(1, this)">MTN</a>
         </div>
     </div>
+
+    <!-- Phone Number Input -->
+    <div class="phone-section">
+        <fieldset class="phone-fieldset">
+            <legend class="phone-legend">Phone Number</legend>
+            <input type="tel" name="phone" id="phone-input" class="phone-input" placeholder="Enter phone number" maxlength="11" required>
+        </fieldset>
+    </div>
+
+    <!-- Amount Input -->
+    <div class="amount-input-section">
+        <fieldset class="amount-fieldset">
+            <legend class="amount-legend">Amount</legend>
+            <input type="number" name="amount" id="amount-input" class="amount-input" placeholder="Enter amount (min ₦50)" min="50" required>
+        </fieldset>
+    </div>
+
+    <!-- Pay Button -->
+    <div class="section">
+        <button type="submit" id="pay-btn" class="pay-btn">Pay</button>
+    </div>
+</form>
+
 
 
           <?php include '../../include/app_settings.php'; ?>
@@ -229,90 +171,19 @@ exit;
 
         
     <script>
-        const networks = <?php echo json_encode($networks); ?>;
-        let selectedNetwork = '';
-        let selectedAmount = null;
+        
 
-        // DOM Elements
-        const phoneInput = document.getElementById('phone-input');
-        const amountInput = document.getElementById('amount-input');
-        const payBtn = document.getElementById('pay-btn');
-        const alertContainer = document.getElementById('alert-container');
-
-        // Network selection
-        document.querySelectorAll('.network-card').forEach(card => {
-            card.addEventListener('click', function() {
-                document.querySelectorAll('.network-card').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedNetwork = this.dataset.network;
-                validatePayButton();
-            });
-        });
-
-        // Quick amount selection
-        document.querySelectorAll('.amount-card').forEach(card => {
-            card.addEventListener('click', function() {
-                document.querySelectorAll('.amount-card').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedAmount = this.dataset.amount;
-                amountInput.value = selectedAmount;
-                validatePayButton();
-            });
-        });
-
-        // Phone input validation and network detection
-        phoneInput.addEventListener('input', function() {
-            let phone = this.value.replace(/[^0-9]/g, '');
-            if (phone.length > 11) {
-                phone = phone.substring(0, 11);
-            }
-            this.value = phone;
-            
-            if (phone.length === 11) {
-                detectNetwork(phone);
-            }
-            
-            validatePayButton();
-        });
-
-        // Amount input validation
-        amountInput.addEventListener('input', function() {
-            selectedAmount = this.value;
-            document.querySelectorAll('.amount-card').forEach(c => c.classList.remove('selected'));
-            if (quickAmounts.includes(parseInt(this.value))) {
-                document.querySelector(`.amount-card[data-amount="${this.value}"]`)?.classList.add('selected');
-            }
-            validatePayButton();
-        });
-
-        const quickAmounts = <?php echo json_encode($quick_amounts); ?>;
+    function setNetwork(id, el) {
+    // update hidden input
+    document.getElementById("networkInput").value = id;
+    // remove active from all tabs
+    document.querySelectorAll(".network-tab").forEach(tab => tab.classList.remove("active"));
+    // add active to clicked one
+    el.classList.add("active");
+}
 
         // Detect network from phone number
-        function detectNetwork(phone) {
-            fetch('', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'action=detect_network&phone=' + encodeURIComponent(phone)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.querySelectorAll('.network-card').forEach(card => {
-                        card.classList.remove('selected');
-                        if (card.dataset.network === data.network) {
-                            card.classList.add('selected');
-                            selectedNetwork = data.network;
-                            validatePayButton();
-                        }
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error detecting network:', error);
-            });
-        }
+     
 
         // Validate pay button state
         function validatePayButton() {
@@ -364,29 +235,55 @@ exit;
             });
         }
 
-      function showAlert(message, type) {
-    if (type === 'success') {
-        Swal.fire({
-            icon: 'success',
-            title: 'Airtime Purchased',
-            text: message,
-            confirmButtonColor: '#3085d6'
-        });
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Transaction Failed',
-            text: message,
-            confirmButtonColor: '#d33'
-        });
-    }
-}
+//       function showAlert(message, type) {
+//     if (type === 'success') {
+//         Swal.fire({
+//             icon: 'success',
+//             title: 'Airtime Purchased',
+//             text: message,
+//             confirmButtonColor: '#3085d6'
+//         });
+//     } else {
+//         Swal.fire({
+//             icon: 'error',
+//             title: 'Transaction Failed',
+//             text: message,
+//             confirmButtonColor: '#d33'
+//         });
+//     }
+// }
 
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            payBtn.addEventListener('click', purchaseAirtime);
-        });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     payBtn.addEventListener('click', purchaseAirtime);
+        // });
+
+        document.addEventListener('DOMContentLoaded', () => {
+  <?php if ($response): ?>
+   Swal.fire({
+    title: "<?= 
+        (($response['Status'] ?? '') === 'success' || ($response['error'] ?? true) === false) 
+        ? 'Purchase Successful!' 
+        : 'Transaction Failed!' 
+    ?>",
+    text: "<?= htmlspecialchars($response['message'] ?? '') ?>",
+    icon: "<?= 
+        (($response['Status'] ?? '') === 'success' || ($response['error'] ?? true) === false) 
+        ? 'success' 
+        : 'error' 
+    ?>",
+    confirmButtonColor: "<?= 
+        (($response['Status'] ?? '') === 'success' || ($response['error'] ?? true) === false) 
+        ? '#3085d6' 
+        : '#d33' 
+    ?>"
+    });
+
+  <?php endif; ?>
+});
+
+
     </script>
 </body>
 </html>

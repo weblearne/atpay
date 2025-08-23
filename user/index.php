@@ -124,9 +124,9 @@ include 'user_top_nav_bar.php';
   </div>
 </div>
 
-<br>
+
 <!-- Banner Slider -->
-<div class="relative overflow-hidden" style="border-radius: 0px;">
+<div class="relative overflow-hidden" style="border-radius: 0px; height:140px;">
   <div id="banner-slider" class="banner-slider flex transition-transform duration-300" style="border-radius: 0px;">
     <div class="banner-slide" style="border-radius: 0px;">
       <img src="../images/bg2.png" style="border-radius: 0px;" alt="Ad Banner 1" class="w-full h-48 object-cover" />
@@ -172,7 +172,7 @@ include 'user_top_nav_bar.php';
   </section>
 
   <!-- Quick Access Section -->
-  <section>
+  <!-- <section>
     <h2 class="section-header">Quick Access</h2>
     <div class="grid-3">
       <div class="grid-item" onclick="goToBalance()" role="button">
@@ -188,7 +188,7 @@ include 'user_top_nav_bar.php';
         <div class="grid-item-title">Voice Call</div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Recharge and Pay Bills Section -->
   <section>

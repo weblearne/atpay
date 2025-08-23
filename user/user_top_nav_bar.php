@@ -112,7 +112,7 @@
     
     </div>
     <button class="balance-btn" onclick="toggleBalanceModal()">
-      Balance: ₦ <?php echo $user_balance; ?>
+  <?php echo $user_balance; ?>
     </button>
   </div>
 

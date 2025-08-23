@@ -307,3 +307,33 @@
                 gap: 0.5rem;
             }
         }
+        
+.network-tabs {
+  display: flex;
+  justify-content: space-between; /* space tabs evenly */
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.network-tab {
+  flex: 1;  /* makes all tabs equal width */
+  text-align: center;
+  padding: 10px 12px;
+  text-decoration: none;
+  background:var(--text-secondary);
+  border-radius: 6px;
+  color: var(--secondary-color);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.network-tab:hover {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.network-tab.active {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
