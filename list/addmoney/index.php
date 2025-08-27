@@ -3,7 +3,7 @@ session_start();
 
 // Redirect if not logged in
 if (!isset($_SESSION['atpay_auth_token_key'])) {
-    header("Location: ../../Auth/login.php");
+    header("Location: ../../Auth/login/");
     exit();
 }
 

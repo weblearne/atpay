@@ -27,11 +27,6 @@ function fetchPlans($token, $payload) {
 
     $response = curl_exec($ch);
 
-        // echo "<pre>";
-        // print_r($response);
-        // echo "</pre>";
-        // exit;
-
     if (curl_errno($ch)) {
         throw new Exception("cURL error: " . curl_error($ch));
     }
@@ -47,26 +42,39 @@ try {
     $networkId = isset($_GET['network']) ? intval($_GET['network']) : 1;
     $payload = ["NetworkId" => $networkId];
     $result = fetchPlans($token, $payload);
-    $plans = $result['plans'] ?? [];
-    $error_ = $result['error'] ?? [];
+
+    $plans   = $result['plans'] ?? [];
+    $Service = $result['Service'] ?? [];
+    $error_  = $result['error'] ?? [];
 
     $message = "";
 
     if ($error_ == true) {
-        // kill all seeeion 
         $message = $result['message'] ?? [];
         include "../../logout.php";
     }
 
-    // {"error":true,"message":"Authorization token not found"}
+    // ✅ Step 1: collect only active services
+    $activeServices = [];
+    foreach ($Service as $srv) {
+        if (isset($srv['DataType'], $srv['DataStatus']) && strtolower($srv['DataStatus']) === 'on') {
+            $activeServices[] = strtolower($srv['DataType']);
+        }
+    }
 
-    
+    // ✅ Step 2: filter plans to keep only those whose DataType is active
+    $plans = array_filter($plans, function($plan) use ($activeServices) {
+        return isset($plan['DataType']) && in_array(strtolower($plan['DataType']), $activeServices);
+    });
+
     $networkNames = ["1" => "MTN", "2" => "Airtel", "3" => "Glo", "4" => "9mobile"];
-    $networkName = $networkNames[$networkId] ?? "Unknown";
+    $networkName  = $networkNames[$networkId] ?? "Unknown";
+
 } catch (Exception $e) {
     die("Error: " . $e->getMessage());
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -1,329 +1,312 @@
-  :root {
-            --primary-color: #4c1d95;
-            --secondary-color: #ffffff;
-            --accent-color: #6366f1;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
-            --hover-bg: #f3f4f6;
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --alternate-bg: #f9fafb;
-        }
+:root {
+    --primary-color: #4c1d95;
+    --secondary-color: #ffffff;
+    --accent-color: #6366f1;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+    --hover-bg: #f3f4f6;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --alternate-bg: #f9fafb;
+    --plan-card-bg: #ffffff;
+    --plan-card-hover: #f8f9ff;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: var(--text-primary);
-            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+    line-height: 1.6;
+    min-height: 100vh;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-        .top-nav {
-            background-color: var(--secondary-color);
-            padding: 1rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-        }
+.top-nav {
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
 
-        .nav-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
+.nav-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
 
-        .back-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-primary);
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s;
-        }
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
 
-        .back-btn:hover {
-            background-color: var(--hover-bg);
-        }
+.back-btn:hover {
+    background-color: var(--hover-bg);
+}
 
-        .section {
-            background-color: var(--secondary-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-        }
+.section {
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
 
-        .section-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
 
-        .phone-fieldset {
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            position: relative;
-        }
+.phone-fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    position: relative;
+}
 
-        .phone-legend {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            padding: 0 0.5rem;
-            background-color: var(--secondary-color);
-        }
+.phone-legend {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 0 0.5rem;
+    background-color: var(--secondary-color);
+}
 
-        .phone-input {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            padding: 0.5rem 0;
-            background-color: transparent;
-        }
+.phone-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    background-color: transparent;
+}
 
-        .phone-input::placeholder {
-            color: var(--text-secondary);
-        }
+.phone-input::placeholder {
+    color: var(--text-secondary);
+}
 
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-        .plan-card {
-            border: 2px solid var(--border-color);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-color: var(--alternate-bg);
-        }
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
 
-        .plan-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
+.page-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
 
-        .plan-card.selected {
-            border-color: var(--primary-color);
-            background-color: var(--hover-bg);
-        }
+.plans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
 
-        .plan-name {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
+.plan-card {
+    background-color: var(--plan-card-bg);
+    border: none;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
 
-        .plan-validity {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-        }
+.plan-card:hover {
+    transform: translateY(-5px);
+    background-color: var(--plan-card-hover);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 
-        .plan-price {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
+.plan-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-        .confirmation-section {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--secondary-color);
-            border-top: 2px solid var(--border-color);
-            padding: 1.5rem;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            transform: translateY(100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 200;
-        }
+.plan-card:hover::before {
+    opacity: 1;
+}
 
-        .confirmation-section.active {
-            transform: translateY(0);
-        }
+.plan-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
 
-        .confirmation-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
+.plan-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+}
 
-        .confirmation-details {
-            background-color: var(--alternate-bg);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
+.plan-validity {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
 
-        .confirmation-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            font-size: 0.875rem;
-        }
+.buy-btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    width: 100%;
+}
 
-        .confirmation-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+.buy-btn:hover {
+    background-color: #3730a3;
+    transform: translateY(-2px);
+}
 
-        .confirmation-value {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
+.buy-btn:active {
+    transform: translateY(0);
+}
 
-        .confirm-btn {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            width: 100%;
-        }
+.message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+}
 
-        .confirm-btn:hover {
-            background-color: #3730a3;
-            transform: translateY(-1px);
-        }
+.message.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid var(--success-color);
+}
 
-        .confirm-btn:disabled {
-            background-color: var(--text-secondary);
-            cursor: not-allowed;
-            transform: none;
-        }
+.message.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid var(--error-color);
+}
 
-        .alert {
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
+@media (max-width: 768px) {
+    .container {
+        padding: 0.75rem;
+    }
 
-        .alert-success {
-            background-color: #d1fae5;
-            color: #065f46;
-            border: 1px solid var(--success-color);
-        }
+    .section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
 
-        .alert-error {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border: 1px solid var(--error-color);
-        }
+    .plans-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
 
-        .loading {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    .plan-card {
+        padding: 1rem;
+    }
 
-        .spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid transparent;
-            border-top: 2px solid var(--secondary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+    .page-title {
+        font-size: 1.5rem;
+    }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+    .page-subtitle {
+        font-size: 0.875rem;
+    }
+}
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 0.75rem;
-            }
+@media (max-width: 480px) {
+    .nav-title {
+        font-size: 1rem;
+    }
 
-            .section {
-                padding: 1rem;
-                margin-bottom: 1rem;
-            }
+    .back-btn {
+        font-size: 1.25rem;
+    }
 
-            .plans-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 0.75rem;
-            }
+    .section-title {
+        font-size: 1rem;
+    }
 
-            .confirmation-section {
-                padding: 1rem;
-            }
-        }
+    .plans-container {
+        grid-template-columns: 1fr;
+    }
 
-        @media (max-width: 480px) {
-            .nav-title {
-                font-size: 1rem;
-            }
+    .plan-card {
+        padding: 0.75rem;
+    }
 
-            .back-btn {
-                font-size: 1.25rem;
-            }
+    .plan-name {
+        font-size: 1rem;
+    }
 
-            .section-title {
-                font-size: 1rem;
-            }
+    .plan-price {
+        font-size: 1.25rem;
+    }
 
-            .plan-card {
-                padding: 0.75rem;
-            }
+    .plan-validity {
+        font-size: 0.75rem;
+    }
 
-            .plan-name {
-                font-size: 0.75rem;
-            }
+    .buy-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
 
-            .plan-validity {
-                font-size: 0.7rem;
-            }
+    .page-title {
+        font-size: 1.25rem;
+    }
 
-            .plan-price {
-                font-size: 0.875rem;
-            }
-
-            .confirmation-title {
-                font-size: 1rem;
-            }
-
-            .confirmation-item {
-                font-size: 0.75rem;
-            }
-        }
+    .page-subtitle {
+        font-size: 0.75rem;
+    }
+}
